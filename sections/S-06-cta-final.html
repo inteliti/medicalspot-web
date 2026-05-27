@@ -1,0 +1,276 @@
+<!-- ============================================================
+     S-06 — CTA Final
+     Copy: B1 § S-06
+     Componentes: C-07 CTA Final Block + C-08 CTA Button (instancia CTA Final)
+     Tokens: C2 § 2.1, § 3.4, § 4.2
+     Interacción: C1 § C-08 (estados loading/modal/success/error, doble clic)
+     NOTA: Reemplazar CALENDLY_URL con la URL real antes de publicar.
+           Formato: https://calendly.com/[usuario]/[tipo-evento]
+     ============================================================ -->
+
+<style>
+  .ms-cta-final {
+    background-color: var(--ms-white, #FEFEFF);
+    padding-block: var(--ms-space-10, 128px);
+  }
+
+  .ms-cta-final__inner {
+    width: 100%;
+    max-width: var(--ms-container-narrow, 880px);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding, 24px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ms-space-7, 48px);
+    text-align: center;
+  }
+
+  .ms-cta-final__heading {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-h2, 2.25rem);
+    font-weight: var(--ms-font-bold, 700);
+    line-height: var(--ms-leading-heading, 1.25);
+    letter-spacing: var(--ms-tracking-tight, -0.02em);
+    color: var(--ms-blue, #1F3A5F);
+    margin: 0;
+    max-width: 20ch;
+  }
+
+  .ms-cta-final__group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ms-space-3, 12px);
+  }
+
+  /* CTA Button md — igual que lg pero ID de instancia distinto */
+  .ms-btn--md {
+    padding: 16px 28px;
+    font-size: var(--ms-text-base, 1rem);
+    min-height: 44px;
+  }
+
+  /* Estado loading */
+  .ms-btn[aria-disabled="true"] {
+    pointer-events: none;
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
+
+  .ms-cta-final__micro {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-small, 0.875rem);
+    font-weight: var(--ms-font-regular, 400);
+    line-height: var(--ms-leading-base, 1.5);
+    color: var(--ms-sage-dark, #628272);
+    margin: 0;
+  }
+
+  /* Mensajes de feedback al usuario (éxito / error) */
+  .ms-cta-message {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-small, 0.875rem);
+    font-weight: var(--ms-font-medium, 500);
+    line-height: var(--ms-leading-base, 1.5);
+    padding: 10px 16px;
+    border-radius: var(--ms-radius-md, 8px);
+    margin: 0;
+    display: none;
+  }
+
+  .ms-cta-message.is-success {
+    display: block;
+    background-color: var(--ms-success-bg, #E6F7EF);
+    color: var(--ms-green-700, #00713F);
+  }
+
+  .ms-cta-message.is-error {
+    display: block;
+    background-color: var(--ms-error-bg, #FDEDEC);
+    color: var(--ms-error, #C0392B);
+  }
+
+  /* ── Mobile ≤ 767px ─────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .ms-cta-final {
+      padding-block: 80px;
+    }
+
+    .ms-cta-final__heading {
+      font-size: 1.75rem;
+    }
+
+    .ms-cta-final__group {
+      align-self: stretch;
+    }
+
+    .ms-btn--md {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<section
+  class="ms-cta-final"
+  id="cta-final"
+  aria-labelledby="cta-final-heading"
+>
+  <div class="ms-cta-final__inner">
+
+    <h2 class="ms-cta-final__heading" id="cta-final-heading">
+      20 minutos que cambian cómo opera tu sociedad.
+    </h2>
+
+    <div class="ms-cta-final__group">
+      <button
+        id="cta-final-btn"
+        class="ms-btn ms-btn--md"
+        type="button"
+        aria-label="Agenda tu demo — abre calendario de agendamiento"
+        data-cta="cta-final"
+      >
+        Agenda tu demo
+        <span class="ms-btn__chip" aria-hidden="true">→</span>
+      </button>
+
+      <!-- Mensajes de estado — aria-live para lectores de pantalla -->
+      <p
+        id="cta-message"
+        class="ms-cta-message"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+      <p class="ms-cta-final__micro">
+        Sin compromiso. Una conversación de 20 minutos.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Calendly integration ──────────────────────────────────────
+     Carga diferida del widget de Calendly (no bloquea FCP).
+     Reemplazar CALENDLY_URL con la URL real antes de publicar.
+     Ejemplo: https://calendly.com/medicalspot/demo
+     ─────────────────────────────────────────────────────────── -->
+<link
+  href="https://assets.calendly.com/assets/external/widget.css"
+  rel="stylesheet"
+  media="print"
+  onload="this.media='all'"
+>
+<script>
+  (function() {
+    /* ── Configuración — reemplazar antes de publicar ── */
+    var CALENDLY_URL = 'CALENDLY_URL_PLACEHOLDER';
+    /* ──────────────────────────────────────────────── */
+
+    var btn = document.getElementById('cta-final-btn');
+    var msgEl = document.getElementById('cta-message');
+    var scriptLoaded = false;
+    var scriptLoading = false;
+    var TIMEOUT_MS = 5000;
+
+    function showMessage(type, text) {
+      msgEl.className = 'ms-cta-message ' + (type === 'success' ? 'is-success' : 'is-error');
+      msgEl.textContent = text;
+      var dur = type === 'error' ? 6000 : 4000;
+      setTimeout(function() {
+        msgEl.className = 'ms-cta-message';
+        msgEl.textContent = '';
+      }, dur);
+    }
+
+    function setLoading(loading) {
+      if (loading) {
+        btn.setAttribute('aria-disabled', 'true');
+        btn.setAttribute('aria-label', 'Cargando, por favor espera');
+      } else {
+        btn.removeAttribute('aria-disabled');
+        btn.setAttribute('aria-label', 'Agenda tu demo — abre calendario de agendamiento');
+      }
+    }
+
+    function openCalendly() {
+      if (CALENDLY_URL === 'CALENDLY_URL_PLACEHOLDER') {
+        /* Modo desarrollo — muestra aviso en lugar de abrir calendly */
+        showMessage('error', 'URL de Calendly no configurada. Contacta a hola@medicalspot.io');
+        setLoading(false);
+        return;
+      }
+      if (typeof window.Calendly === 'undefined') {
+        showMessage('error', 'No pudimos abrir el calendario. Intenta de nuevo o escríbenos a hola@medicalspot.io');
+        setLoading(false);
+        return;
+      }
+      window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+      setLoading(false);
+    }
+
+    function loadCalendlyScript(callback) {
+      if (scriptLoaded) { callback(); return; }
+      if (scriptLoading) { return; }
+      scriptLoading = true;
+
+      var s = document.createElement('script');
+      s.src = 'https://assets.calendly.com/assets/external/widget.js';
+      s.async = true;
+
+      var timer = setTimeout(function() {
+        showMessage('error', 'No pudimos abrir el calendario. Intenta de nuevo o escríbenos a hola@medicalspot.io');
+        setLoading(false);
+      }, TIMEOUT_MS);
+
+      s.onload = function() {
+        clearTimeout(timer);
+        scriptLoaded = true;
+        scriptLoading = false;
+        callback();
+      };
+      s.onerror = function() {
+        clearTimeout(timer);
+        scriptLoading = false;
+        showMessage('error', 'No pudimos abrir el calendario. Intenta de nuevo o escríbenos a hola@medicalspot.io');
+        setLoading(false);
+      };
+      document.head.appendChild(s);
+    }
+
+    /* Clic en el botón CTA Final */
+    btn.addEventListener('click', function() {
+      if (btn.getAttribute('aria-disabled') === 'true') return;
+      setLoading(true);
+      loadCalendlyScript(openCalendly);
+    });
+
+    /* Escuchar evento de agendamiento completado desde Calendly */
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.event === 'calendly.event_scheduled') {
+        showMessage('success', 'Demo agendada. Te enviamos la confirmación por email.');
+        setLoading(false);
+      }
+    });
+
+    /* Pre-carga diferida del script de Calendly tras 3s de carga o primer scroll */
+    var preloadDone = false;
+    function preload() {
+      if (preloadDone || scriptLoaded) return;
+      preloadDone = true;
+      loadCalendlyScript(function() {});
+    }
+    setTimeout(preload, 3000);
+    window.addEventListener('scroll', preload, { once: true, passive: true });
+
+    /* También manejar los CTAs de navbar y hero (data-cta="navbar" / data-cta="hero") */
+    document.querySelectorAll('[data-cta="navbar"], [data-cta="hero"]').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        setLoading(true);
+        loadCalendlyScript(openCalendly);
+      });
+    });
+  })();
+</script>

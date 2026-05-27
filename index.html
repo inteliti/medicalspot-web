@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MedicalSpot: toda la gestión de tu sociedad médica en un solo lugar. Membresías, pagos, eventos y comunidad sin hojas de cálculo.">
+  <title>MedicalSpot: Gestión integral para sociedades médicas</title>
+
+  <!-- LCP preload — WebP srcset; browsers choose based on imagesizes before the <picture> is parsed -->
+  <link rel="preload" as="image"
+        imagesrcset="assets/hero-800.webp 800w, assets/hero-1600.webp 1600w"
+        imagesizes="(max-width: 767px) 100vw, 50vw"
+        fetchpriority="high">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset mínimo ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Design Tokens — :root ────────────────────────────────── */
+    :root {
+      /* Colores */
+      --ms-green:                #00B366;
+      --ms-green-600:            #009A57;
+      --ms-green-700:            #00713F;
+      --ms-green-100:            #E6F7EF;
+      --ms-green-light-ondark:   #7DDDB6;
+      --ms-blue:                 #1F3A5F;
+      --ms-blue-700:             #16294A;
+      --ms-blue-200:             #E8ECF2;
+      --ms-ink:                  #424142;
+      --ms-sage-dark:            #516A5C;
+      --ms-sage-light:           #AFC4BC;
+      --ms-white:                #FEFEFF;
+      --ms-bg-alt:               #F7F9F8;
+      --ms-bg-muted:             #EEF2F0;
+      --ms-border:               #E6EAE8;
+      --ms-selection-bg:         rgba(0, 179, 102, 0.22);
+      --ms-chip-ondark-bg:       rgba(125, 221, 182, 0.16);
+      --ms-photo-overlay:        rgba(31, 58, 95, 0.55);
+      --ms-arrow-chip-bg:        rgba(0, 0, 0, 0.18);
+
+      /* Dark section surfaces — CTA final and Problem section */
+      --ms-blue-950:             #152B44;
+      --ms-forest-900:           #002E1A;
+      --ms-forest-800:           #005C35;
+      --ms-forest-600:           #1A7A4A;
+      --ms-forest-500:           #00913F;
+      --ms-mint-300:             #5CE4A4;
+
+      /* Semántica */
+      --ms-success:              #00B366;
+      --ms-success-bg:           #E6F7EF;
+      --ms-error:                #C0392B;
+      --ms-error-bg:             #FDEDEC;
+      --ms-warning:              #C68A1E;
+      --ms-warning-bg:           #FEF6E4;
+
+      /* Tipografía */
+      --ms-font-family:          'Poppins', system-ui, -apple-system, sans-serif;
+      --ms-font-regular:         400;
+      --ms-font-medium:          500;
+      --ms-font-semibold:        600;
+      --ms-font-bold:            700;
+      --ms-font-extrabold:       800;
+      --ms-text-display:         5rem;
+      --ms-text-h1:              4rem;
+      --ms-text-h2:              2.25rem;
+      --ms-text-h3:              1.75rem;
+      --ms-text-h4:              1.375rem;
+      --ms-text-lead:            1.125rem;
+      --ms-text-base:            1rem;
+      --ms-text-small:           0.875rem;
+      --ms-text-eyebrow:         0.75rem;
+      --ms-leading-display:      1.05;
+      --ms-leading-heading:      1.25;
+      --ms-leading-tight:        1.10;
+      --ms-leading-lead:         1.65;
+      --ms-leading-base:         1.50;
+      --ms-tracking-tight:       -0.02em;
+      --ms-tracking-tighter:     -0.03em;
+      --ms-tracking-wide:        0.04em;
+      --ms-tracking-wider:       0.10em;
+
+      /* Espaciado */
+      --ms-space-1:   4px;
+      --ms-space-2:   8px;
+      --ms-space-3:   12px;
+      --ms-space-4:   16px;
+      --ms-space-5:   24px;
+      --ms-space-6:   32px;
+      --ms-space-7:   48px;
+      --ms-space-8:   64px;
+      --ms-space-9:   96px;
+      --ms-space-10:  128px;
+
+      /* Radios */
+      --ms-radius-sm:    6px;
+      --ms-radius-md:    8px;
+      --ms-radius-lg:    12px;
+      --ms-radius-xl:    20px;
+      --ms-radius-pill:  999px;
+
+      /* Sombras */
+      --ms-shadow-sm:    0 1px 2px rgba(31,58,95,0.06);
+      --ms-shadow-md:    0 4px 12px rgba(31,58,95,0.08);
+      --ms-shadow-lg:    0 12px 32px rgba(31,58,95,0.12);
+      --ms-shadow-focus: 0 0 0 3px rgba(0,179,102,0.25);
+
+      /* Contenedores */
+      --ms-container-main:    1200px;
+      --ms-container-narrow:  880px;
+      --ms-container-padding: 24px;
+      --ms-section-v:         var(--ms-space-9);
+      --ms-section-v-lg:      var(--ms-space-10);
+
+      /* Motion */
+      --ms-duration-micro:      150ms;
+      --ms-duration-component:  200ms;
+      --ms-duration-page:       300ms;
+      --ms-ease-base:           cubic-bezier(0.2, 0, 0.2, 1);
+      --ms-ease-in:             cubic-bezier(0.4, 0, 1, 1);
+      --ms-ease-out:            cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    ::selection {
+      background-color: var(--ms-selection-bg);
+    }
+
+    @media (max-width: 767px) {
+      :root {
+        --ms-text-h1:      2.5rem;
+        --ms-text-h2:      1.75rem;
+        --ms-text-h3:      1.375rem;
+        --ms-text-h4:      1.125rem;
+        --ms-text-lead:    1.0625rem;
+        --ms-text-eyebrow: 0.6875rem;
+        --ms-section-v:    80px;
+        --ms-section-v-lg: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     S-01 — NavBar
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  .ms-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    background-color: var(--ms-white);
+    box-shadow: none;
+    border-bottom: 1px solid transparent;
+    transition:
+      box-shadow var(--ms-duration-component, 200ms) var(--ms-ease-base),
+      border-color var(--ms-duration-component, 200ms) var(--ms-ease-base);
+  }
+  .ms-navbar.is-scrolled {
+    box-shadow: var(--ms-shadow-md);
+    border-bottom-color: var(--ms-border);
+  }
+  .ms-navbar__inner {
+    width: 100%;
+    max-width: var(--ms-container-main);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ms-navbar__logo-link {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+  .ms-navbar__logo {
+    height: 32px;
+    width: auto;
+    display: block;
+  }
+  .ms-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ms-space-3);
+    font-family: var(--ms-font-family);
+    font-weight: var(--ms-font-bold);
+    line-height: 1;
+    border: none;
+    border-radius: var(--ms-radius-pill);
+    cursor: pointer;
+    text-decoration: none;
+    background-color: var(--ms-green);
+    color: var(--ms-white);
+    transition: background-color var(--ms-duration-micro) var(--ms-ease-base), transform var(--ms-duration-micro) var(--ms-ease-base), box-shadow var(--ms-duration-micro) var(--ms-ease-base);
+    white-space: nowrap;
+  }
+  .ms-btn--sm {
+    padding: 10px 16px;
+    font-size: var(--ms-text-small);
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .ms-btn--lg {
+    padding: 18px 24px;
+    font-size: var(--ms-text-base);
+    min-height: 44px;
+  }
+  .ms-btn--md {
+    padding: 16px 28px;
+    font-size: var(--ms-text-base);
+    min-height: 44px;
+  }
+  .ms-btn__chip {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--ms-arrow-chip-bg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--ms-duration-micro) var(--ms-ease-base);
+    flex-shrink: 0;
+    font-size: 0.875rem;
+    line-height: 1;
+  }
+  .ms-btn:hover { background-color: var(--ms-green-600); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 179, 102, 0.28); }
+  .ms-btn:hover .ms-btn__chip { transform: translateX(2px); }
+  .ms-btn:focus-visible { outline: none; box-shadow: var(--ms-shadow-focus); }
+  .ms-btn[aria-disabled="true"] {
+    pointer-events: none;
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
+  @media (max-width: 767px) {
+    .ms-navbar { height: 60px; }
+    .ms-navbar__logo { height: 26px; }
+  }
+  @media (max-width: 360px) {
+    .ms-navbar__logo { height: 22px; }
+  }
+</style>
+
+<nav class="ms-navbar" role="navigation" aria-label="Navegación principal" id="navbar">
+  <div class="ms-navbar__inner">
+    <a href="#" class="ms-navbar__logo-link" aria-label="MedicalSpot, ir al inicio">
+      <img
+        src="assets/MedicalSpot_logo_color.svg"
+        alt="MedicalSpot"
+        class="ms-navbar__logo"
+        width="160" height="32"
+        loading="eager" fetchpriority="high"
+      >
+    </a>
+    <a href="#cta-final" class="ms-btn ms-btn--sm"
+       aria-label="Agenda tu demo en Calendly"
+       data-cta="navbar">
+      Agenda tu demo
+    </a>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     S-02 — Hero Block
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  @keyframes ms-fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ms-fade-in-right {
+    from { opacity: 0; transform: translateX(18px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .ms-hero {
+    background: radial-gradient(ellipse 60% 100% at 18% 50%, #eef5f1 0%, var(--ms-white) 68%);
+    padding-block: var(--ms-space-8) var(--ms-space-9);
+    overflow: hidden;
+  }
+  .ms-hero__inner {
+    width: 100%;
+    max-width: var(--ms-container-main);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--ms-space-9);
+    align-items: stretch;
+  }
+  .ms-hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-6);
+    justify-content: center;
+  }
+  .ms-hero__heading {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-h1);
+    font-weight: var(--ms-font-bold);
+    line-height: var(--ms-leading-tight);
+    letter-spacing: var(--ms-tracking-tight);
+    color: var(--ms-blue);
+    margin: 0;
+    animation: ms-fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.10s both;
+  }
+  .ms-hero__subheadline {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-lead);
+    font-weight: var(--ms-font-regular);
+    line-height: var(--ms-leading-lead);
+    color: var(--ms-ink);
+    margin: 0;
+    max-width: 48ch;
+    animation: ms-fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+  }
+  .ms-hero__cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-3);
+    align-items: flex-start;
+    animation: ms-fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.40s both;
+  }
+  .ms-hero__micro {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-small);
+    font-weight: var(--ms-font-regular);
+    line-height: var(--ms-leading-base);
+    color: var(--ms-sage-dark);
+    margin: 0;
+  }
+  .ms-hero__visual {
+    position: relative;
+    border-radius: var(--ms-radius-xl);
+    overflow: hidden;
+    min-height: 400px;
+    background-color: var(--ms-bg-muted);
+    animation: ms-fade-in-right 0.70s cubic-bezier(0.16, 1, 0.3, 1) 0.20s both;
+  }
+  .ms-hero__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .ms-hero__visual:hover img {
+    transform: scale(1.025);
+  }
+  @media (max-width: 767px) {
+    /* ── Image-first editorial layout ──────────────────────────── */
+    /* Photo at top as visual hook, then headline, then CTA.       */
+    /* No top padding — image starts flush below the navbar.       */
+    .ms-hero {
+      padding-block: 0 var(--ms-space-8);
+    }
+    .ms-hero__inner {
+      grid-template-columns: 1fr;
+      gap: 0;             /* photo and content have their own spacing */
+      align-items: initial;
+      padding-inline: 0; /* image bleeds edge-to-edge; content pads itself */
+    }
+    .ms-hero__content {
+      gap: var(--ms-space-5);
+      padding-inline: var(--ms-container-padding);
+      padding-top: var(--ms-space-6);  /* breathing room between photo and heading */
+    }
+    .ms-hero__heading   { font-size: 2.25rem; }
+    .ms-hero__subheadline { font-size: var(--ms-text-base); }
+    .ms-hero__cta-group { align-items: stretch; }
+    .ms-btn--lg         { justify-content: center; }
+    .ms-hero__visual {
+      order: -1;           /* photo first in DOM flow */
+      min-height: unset;
+      aspect-ratio: 4 / 3; /* more visual mass than 16:9 */
+      border-radius: 0;    /* full-bleed, no corner clip */
+      animation: none;     /* top-of-screen element doesn't need entrance anim */
+      opacity: 1;
+    }
+  }
+  @media (max-width: 360px) {
+    .ms-hero__heading { font-size: 2rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ms-hero__heading, .ms-hero__subheadline, .ms-hero__cta-group,
+    .ms-hero__visual {
+      animation: none; opacity: 1; transform: none;
+    }
+    .ms-hero__visual img, .ms-hero__visual:hover img { transform: none; transition: none; }
+  }
+</style>
+
+<section class="ms-hero" id="hero" aria-labelledby="hero-heading">
+  <div class="ms-hero__inner">
+    <div class="ms-hero__content">
+      <h1 class="ms-hero__heading" id="hero-heading">
+        Toda la gestión de tu sociedad médica, en un solo lugar.
+      </h1>
+      <p class="ms-hero__subheadline">
+        Membresías, pagos, eventos y comunidad: todo integrado. Sin hojas de cálculo, sin correos cruzados.
+      </p>
+      <div class="ms-hero__cta-group">
+        <a href="#cta-final" class="ms-btn ms-btn--lg"
+           aria-label="Agenda tu demo en Calendly: 20 minutos, sin compromiso"
+           data-cta="hero">
+          Agenda tu demo: 20 minutos
+          <span class="ms-btn__chip" aria-hidden="true">→</span>
+        </a>
+        <p class="ms-hero__micro">
+          Sin compromiso. Solo una conversación de 20 minutos.
+        </p>
+      </div>
+    </div>
+    <div class="ms-hero__visual">
+      <picture>
+        <source type="image/webp"
+                srcset="assets/hero-800.webp 800w, assets/hero-1600.webp 1600w"
+                sizes="(max-width: 767px) 100vw, 50vw">
+        <img
+          src="assets/hero.png"
+          alt="Directiva de sociedad médica revisando datos en sala de juntas con colegas al fondo"
+          loading="eager"
+          fetchpriority="high"
+          width="2400"
+          height="1792"
+        >
+      </picture>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     S-04 — Problema + Solución + Video
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  .ms-problema,
+  .ms-video-section {
+    padding-block: var(--ms-space-9);
+  }
+  .ms-problema__inner,
+  .ms-solucion__inner,
+  .ms-video-section__inner {
+    width: 100%;
+    max-width: var(--ms-container-main);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding);
+  }
+  .ms-section-heading {
+    font-family: var(--ms-font-family);
+    font-size: clamp(1.75rem, 4.5vw, 3.25rem);
+    font-weight: var(--ms-font-extrabold);
+    line-height: 1.15;
+    letter-spacing: var(--ms-tracking-tighter);
+    color: var(--ms-blue);
+    margin: 0 0 var(--ms-space-8);
+    text-align: center;
+  }
+  /* One word per heading can carry a green accent — not gradient, not decoration; earned emphasis */
+  .ms-h2-em {
+    font-style: normal;
+    color: var(--ms-green);
+  }
+  .ms-problema .ms-h2-em,
+  .ms-social-proof .ms-h2-em {
+    color: var(--ms-green-light-ondark);
+  }
+  /* ── Problem Section ───────────────────────────────────────── */
+  .ms-problema {
+    background: linear-gradient(168deg, var(--ms-blue-950) 0%, var(--ms-blue) 100%);
+  }
+  .ms-problema .ms-section-heading {
+    color: var(--ms-white);
+    font-size: clamp(2rem, 5.5vw, 3.875rem);
+    letter-spacing: -0.035em;
+  }
+  .ms-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--ms-space-6);
+    counter-reset: problem-card;
+  }
+  .ms-problem-card {
+    counter-increment: problem-card;
+    background-color: var(--ms-white);
+    border: none;
+    border-top: 2px solid var(--ms-green, #00B366);
+    border-radius: var(--ms-radius-lg);
+    padding: var(--ms-space-7) var(--ms-space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-4);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.32), 0 2px 8px rgba(0, 0, 0, 0.14);
+  }
+  /* Sequence number — auto-generated via CSS counter */
+  .ms-problem-card::before {
+    content: counter(problem-card, decimal-leading-zero);
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-small);
+    font-weight: var(--ms-font-semibold);
+    letter-spacing: 0.12em;
+    color: var(--ms-green, #00B366);
+    line-height: 1;
+  }
+  .ms-problem-card__icon {
+    width: 48px;
+    height: 48px;
+    color: var(--ms-green, #00B366);
+    flex-shrink: 0;
+  }
+  .ms-problem-card__title {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-h4);
+    font-weight: var(--ms-font-semibold);
+    line-height: var(--ms-leading-heading);
+    color: var(--ms-blue);
+    margin: 0;
+  }
+  .ms-problem-card__body {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-base);
+    font-weight: var(--ms-font-regular);
+    line-height: var(--ms-leading-base);
+    color: var(--ms-ink);
+    margin: 0;
+  }
+  /* ── Scroll-triggered stagger animation ────────────────────── */
+  .ms-problema--animated .ms-problem-card {
+    opacity: 0;
+    transform: translateY(-36px);
+    transition:
+      opacity   0.88s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.88s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* Base offset of 80ms so cards wait a beat after the trigger fires */
+  .ms-problema--animated .ms-problem-card:nth-child(1) { transition-delay:  80ms; }
+  .ms-problema--animated .ms-problem-card:nth-child(2) { transition-delay: 360ms; }
+  .ms-problema--animated .ms-problem-card:nth-child(3) { transition-delay: 640ms; }
+  .ms-problema--animated.is-visible .ms-problem-card {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ms-problema--animated .ms-problem-card {
+      opacity: 1; transform: none; transition: none;
+    }
+  }
+  /* ── Solucion — Zigzag editorial ───────────────────────────── */
+  .ms-solucion {
+    background-color: var(--ms-white);
+    padding-block: var(--ms-space-9) var(--ms-space-10);
+    overflow-x: clip; /* contain translateX animation initial states */
+  }
+  .ms-solucion .ms-section-heading {
+    margin-bottom: var(--ms-space-9);
+    text-align: left;
+  }
+  .ms-zigzag {
+    display: flex;
+    flex-direction: column;
+  }
+  .ms-zigzag__step {
+    display: grid;
+    grid-template-columns: 55fr 45fr;
+    gap: var(--ms-space-8);
+    align-items: center;
+    padding-block: var(--ms-space-8);
+  }
+  .ms-zigzag__step + .ms-zigzag__step {
+    border-top: 1px solid var(--ms-border);
+  }
+  /* Flip: texto izquierda, foto derecha */
+  .ms-zigzag__step--flip { grid-template-columns: 45fr 55fr; }
+  .ms-zigzag__step--flip .ms-zigzag__photo { grid-column: 2; grid-row: 1; }
+  .ms-zigzag__step--flip .ms-zigzag__text  { grid-column: 1; grid-row: 1; }
+  /* Photo */
+  .ms-zigzag__photo {
+    border-radius: var(--ms-radius-xl);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    box-shadow: var(--ms-shadow-md);
+  }
+  .ms-zigzag__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  /* Text column */
+  .ms-zigzag__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-5);
+    padding-inline: var(--ms-space-5);
+  }
+  .ms-zigzag__label {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-eyebrow);
+    font-weight: var(--ms-font-semibold);
+    letter-spacing: var(--ms-tracking-wider);
+    text-transform: uppercase;
+    color: var(--ms-green-700);
+    display: block;
+  }
+  .ms-zigzag__title {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-h3);
+    font-weight: var(--ms-font-bold);
+    line-height: var(--ms-leading-heading);
+    letter-spacing: var(--ms-tracking-tight);
+    color: var(--ms-blue);
+    margin: 0;
+  }
+  .ms-zigzag__body {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-base);
+    font-weight: var(--ms-font-regular);
+    line-height: var(--ms-leading-base);
+    color: var(--ms-ink);
+    margin: 0;
+    max-width: 44ch;
+  }
+  /* Slide-in: base transition always present */
+  .ms-zigzag__photo,
+  .ms-zigzag__text {
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* Initial hidden state — only when JS adds .ms-zigzag--animated */
+  .ms-zigzag--animated .ms-zigzag__step .ms-zigzag__photo {
+    opacity: 0;
+    transform: translateX(-52px);
+  }
+  .ms-zigzag--animated .ms-zigzag__step .ms-zigzag__text {
+    opacity: 0;
+    transform: translateX(52px);
+    transition-delay: 130ms;
+  }
+  .ms-zigzag--animated .ms-zigzag__step--flip .ms-zigzag__photo { transform: translateX(52px); }
+  .ms-zigzag--animated .ms-zigzag__step--flip .ms-zigzag__text  { transform: translateX(-52px); }
+  /* Revealed */
+  .ms-zigzag--animated .ms-zigzag__step.is-visible .ms-zigzag__photo,
+  .ms-zigzag--animated .ms-zigzag__step.is-visible .ms-zigzag__text {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  /* Video */
+  .ms-video-section { background-color: var(--ms-bg-alt); }
+  .ms-video-section__inner { max-width: var(--ms-container-narrow); }
+  .ms-video-section .ms-section-heading { margin-bottom: var(--ms-space-7); }
+  .ms-video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--ms-radius-xl);
+    overflow: hidden;
+    background-color: var(--ms-bg-muted);
+    box-shadow: var(--ms-shadow-lg);
+  }
+  .ms-video-wrapper iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+  /* ── Video facade — editorial 3-zone composition ───────────── */
+  @keyframes ms-facade-scan {
+    0%   { transform: translateY(0); opacity: 0.55; }
+    88%  { opacity: 0.22; }
+    100% { transform: translateY(600px); opacity: 0; }
+  }
+  .ms-video-facade {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(18px, 4%, 30px) clamp(22px, 5%, 38px);
+    overflow: hidden;
+    /* Layered: green tint pocket top-left + directional gradient + dot grid */
+    background-color: var(--ms-blue-950);
+    background-image:
+      radial-gradient(ellipse 65% 75% at 8% 0%, rgba(0, 113, 63, 0.18) 0%, transparent 55%),
+      linear-gradient(158deg, rgba(31, 58, 95, 0.94) 0%, rgba(10, 18, 29, 1) 100%),
+      radial-gradient(circle, rgba(125, 221, 182, 0.055) 1px, transparent 1px);
+    background-size: auto, auto, 28px 28px;
+  }
+  /* Scan line — fires once on load, subtle life without distraction */
+  .ms-video-facade::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--ms-green-light-ondark) 20%,
+      var(--ms-green-light-ondark) 80%,
+      transparent 100%
+    );
+    opacity: 0;
+    animation: ms-facade-scan 3s cubic-bezier(0, 0, 0.2, 1) 0.6s 1 forwards;
+    pointer-events: none;
+  }
+  /* Hover brightening overlay */
+  .ms-video-facade::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0);
+    transition: background 0.25s cubic-bezier(0, 0, 0.2, 1);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  .ms-video-facade:hover::after,
+  .ms-video-facade:focus-visible::after {
+    background: rgba(255, 255, 255, 0.055);
+  }
+  .ms-video-facade:focus-visible {
+    outline: 3px solid var(--ms-green);
+    outline-offset: 4px;
+  }
+  /* Zone 1 — top: eyebrow + headline */
+  .ms-video-facade__top {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .ms-video-facade__eyebrow {
+    font-family: var(--ms-font-family);
+    font-size: 0.625rem;
+    font-weight: var(--ms-font-semibold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ms-green-light-ondark);
+    margin: 0;
+  }
+  .ms-video-facade__headline {
+    font-family: var(--ms-font-family);
+    font-size: clamp(0.9375rem, 2.2vw, 1.4375rem);
+    font-weight: var(--ms-font-bold);
+    line-height: 1.22;
+    color: var(--ms-white);
+    max-width: 22ch;
+    margin: 0;
+  }
+  /* Zone 2 — center: play button + micro label */
+  .ms-video-facade__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .ms-video-facade__play {
+    width: 64px;
+    height: 64px;
+    filter: drop-shadow(0 4px 18px rgba(0, 179, 102, 0.50));
+    transition: transform 0.22s cubic-bezier(0, 0, 0.2, 1),
+                filter 0.22s cubic-bezier(0, 0, 0.2, 1);
+  }
+  .ms-video-facade:hover .ms-video-facade__play,
+  .ms-video-facade:focus-visible .ms-video-facade__play {
+    transform: scale(1.1);
+    filter: drop-shadow(0 6px 28px rgba(0, 179, 102, 0.68));
+  }
+  .ms-video-facade__play-label {
+    font-family: var(--ms-font-family);
+    font-size: 0.6875rem;
+    font-weight: var(--ms-font-medium);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(254, 254, 255, 0.42);
+    margin: 0;
+  }
+  /* Zone 3 — bottom: feature tags */
+  .ms-video-facade__features {
+    font-family: var(--ms-font-family);
+    font-size: clamp(0.5625rem, 1.05vw, 0.6875rem);
+    font-weight: var(--ms-font-regular);
+    letter-spacing: 0.05em;
+    color: rgba(254, 254, 255, 0.28);
+    border-top: 1px solid rgba(125, 221, 182, 0.12);
+    padding-top: 10px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+  }
+  @media (max-width: 767px) {
+    .ms-video-facade { padding: 14px 18px; }
+    .ms-video-facade__headline { font-size: 0.875rem; }
+    .ms-video-facade__play { width: 48px; height: 48px; }
+    .ms-video-facade__play-label,
+    .ms-video-facade__features { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ms-video-facade::before { animation: none; opacity: 0; }
+    .ms-video-facade::after,
+    .ms-video-facade__play { transition: none; }
+  }
+  .ms-video-fallback {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background-color: var(--ms-bg-muted);
+    border-radius: var(--ms-radius-xl);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--ms-space-6);
+  }
+  .ms-video-fallback.is-visible { display: flex; flex-direction: column; gap: var(--ms-space-4); }
+  .ms-video-fallback__text {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-base);
+    color: var(--ms-ink);
+    margin: 0;
+  }
+  .ms-video-fallback__link {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-base);
+    font-weight: var(--ms-font-medium);
+    color: var(--ms-green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  @media (max-width: 767px) {
+    .ms-problema,
+    .ms-video-section { padding-block: 80px; }
+    .ms-solucion { padding-block: 80px; }
+    .ms-section-heading { margin-bottom: var(--ms-space-7); text-align: left; }
+    .ms-solucion .ms-section-heading { margin-bottom: var(--ms-space-7); }
+    /* Horizontal scroll carousel — flex row equalises all card heights via align-items:stretch */
+    .ms-cards {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: var(--ms-space-4);
+      /* break out of container padding so cards can scroll edge-to-edge */
+      margin-inline: calc(-1 * var(--ms-container-padding));
+      padding-inline-start: var(--ms-container-padding);
+      padding-bottom: var(--ms-space-2);
+      align-items: stretch;
+    }
+    .ms-cards::-webkit-scrollbar { display: none; }
+    /* trailing flex item — reliable cross-browser substitute for padding-inline-end on overflow containers */
+    .ms-cards::after {
+      content: '';
+      flex: 0 0 var(--ms-container-padding);
+    }
+    .ms-problem-card {
+      flex: 0 0 76vw;
+      min-width: 260px;
+      max-width: 310px;
+      scroll-snap-align: start;
+      padding: var(--ms-space-6) var(--ms-space-5);
+    }
+    .ms-zigzag__step {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ms-space-6);
+      padding-block: var(--ms-space-7);
+    }
+    .ms-zigzag__step--flip .ms-zigzag__photo { order: -1; }
+    .ms-zigzag__photo { aspect-ratio: 16 / 9; }
+    .ms-zigzag__text { padding-inline: 0; }
+  }
+</style>
+
+<section class="ms-problema" id="problema" aria-labelledby="problema-heading">
+  <div class="ms-problema__inner">
+    <h2 class="ms-section-heading" id="problema-heading">
+      ¿Tu sociedad sigue operando así?
+    </h2>
+    <div class="ms-cards" role="list">
+
+      <article class="ms-problem-card" role="listitem">
+        <svg class="ms-problem-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="6" y="6" width="36" height="36" rx="4"/>
+          <line x1="6" y1="17" x2="42" y2="17"/>
+          <line x1="17" y1="6" x2="17" y2="42"/>
+          <line x1="22" y1="25" x2="38" y2="25"/>
+          <line x1="22" y1="33" x2="38" y2="33"/>
+        </svg>
+        <h3 class="ms-problem-card__title">Todo por WhatsApp y hojas de cálculo</h3>
+        <p class="ms-problem-card__body">Cobrar cuotas, registrar miembros, coordinar eventos: todo manual, todo disperso, todo consumiendo tiempo de la directiva.</p>
+      </article>
+
+      <article class="ms-problem-card" role="listitem">
+        <svg class="ms-problem-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="24" r="6"/>
+          <circle cx="36" cy="12" r="6"/>
+          <circle cx="36" cy="36" r="6"/>
+          <line x1="18" y1="21" x2="29" y2="15" stroke-dasharray="4 4"/>
+          <line x1="18" y1="27" x2="29" y2="33" stroke-dasharray="4 4"/>
+        </svg>
+        <h3 class="ms-problem-card__title">Los socios no se conectan entre sí</h3>
+        <p class="ms-problem-card__body">Tu sociedad no tiene un espacio digital propio. La comunidad existe, pero no tiene dónde reunirse ni crecer.</p>
+      </article>
+
+      <article class="ms-problem-card" role="listitem">
+        <svg class="ms-problem-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6,36 16,24 26,30 42,12"/>
+          <polyline points="33,12 42,12 42,21"/>
+          <line x1="6" y1="42" x2="42" y2="42"/>
+        </svg>
+        <h3 class="ms-problem-card__title">La directiva no puede justificar el valor de pertenecer</h3>
+        <p class="ms-problem-card__body">Sin herramientas, es difícil demostrar que la membresía vale. La presión de generar valor recae en la directiva, no en la plataforma.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Problem cards — staggered drop-in on scroll */
+  (function () {
+    var pref = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var section = document.querySelector('.ms-problema');
+    if (pref || !section || !window.IntersectionObserver) return;
+    section.classList.add('ms-problema--animated');
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.42 });
+    obs.observe(section);
+  }());
+</script>
+
+<section class="ms-solucion" id="solucion" aria-labelledby="solucion-heading">
+  <div class="ms-solucion__inner">
+    <h2 class="ms-section-heading" id="solucion-heading">
+      MedicalSpot <em class="ms-h2-em">centraliza</em> todo en un solo lugar.
+    </h2>
+
+    <div class="ms-zigzag" role="list">
+
+      <!-- Paso 1: foto izquierda, texto derecha -->
+      <div class="ms-zigzag__step" role="listitem">
+        <div class="ms-zigzag__photo">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/equipo_administrativo_oficina-800.webp 800w, assets/equipo_administrativo_oficina-1600.webp 1600w"
+                    sizes="(max-width: 767px) 100vw, 55vw">
+            <img src="assets/equipo_administrativo_oficina.png"
+                 alt="Equipo administrativo revisando la plataforma MedicalSpot"
+                 loading="lazy" width="2624" height="1632">
+          </picture>
+        </div>
+        <div class="ms-zigzag__text">
+          <span class="ms-zigzag__label">01 · Sin carga administrativa</span>
+          <h3 class="ms-zigzag__title">La directiva deja de administrar. Vuelve a liderar.</h3>
+          <p class="ms-zigzag__body">Membresías, cobros y comunicaciones en automático. Lo que antes le quitaba horas a tu junta directiva ocurre ahora sin intervención manual.</p>
+        </div>
+      </div>
+
+      <!-- Paso 2: foto derecha, texto izquierda -->
+      <div class="ms-zigzag__step ms-zigzag__step--flip" role="listitem">
+        <div class="ms-zigzag__photo">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/congreso-800.webp 800w, assets/congreso-1600.webp 1600w"
+                    sizes="(max-width: 767px) 100vw, 45vw">
+            <img src="assets/congreso.png"
+                 alt="Médicos en congreso médico durante sesión de networking"
+                 loading="lazy" width="2624" height="1632">
+          </picture>
+        </div>
+        <div class="ms-zigzag__text">
+          <span class="ms-zigzag__label">02 · Socios conectados</span>
+          <h3 class="ms-zigzag__title">Tus socios tienen un espacio propio donde encontrarse y crecer.</h3>
+          <p class="ms-zigzag__body">Una comunidad bajo la identidad de tu organización. Sin grupos de WhatsApp, sin plataformas ajenas, sin depender de lo que no controlas.</p>
+        </div>
+      </div>
+
+      <!-- Paso 3: foto izquierda, texto derecha -->
+      <div class="ms-zigzag__step" role="listitem">
+        <div class="ms-zigzag__photo">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/prestigio-800.webp 800w, assets/prestigio-1600.webp 1600w"
+                    sizes="(max-width: 767px) 100vw, 55vw">
+            <img src="assets/prestigio.png"
+                 alt="Presidenta de sociedad médica en contexto institucional"
+                 loading="lazy" width="2624" height="1632">
+          </picture>
+        </div>
+        <div class="ms-zigzag__text">
+          <span class="ms-zigzag__label">03 · Valor demostrable</span>
+          <h3 class="ms-zigzag__title">El valor de pertenecer, claro para cada socio.</h3>
+          <p class="ms-zigzag__body">Tus socios ven qué reciben, cuándo renuevan y por qué vale la pena. Tu junta deja de convencer y empieza a demostrar resultados.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var pref = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var container = document.querySelector('.ms-zigzag');
+    var steps = document.querySelectorAll('.ms-zigzag__step');
+    if (pref || !container || !steps.length || !window.IntersectionObserver) return;
+    container.classList.add('ms-zigzag--animated');
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    steps.forEach(function (s) { obs.observe(s); });
+  }());
+</script>
+
+<section class="ms-video-section" id="video" aria-labelledby="video-heading">
+  <div class="ms-video-section__inner">
+    <h2 class="ms-section-heading" id="video-heading">
+      Mira cómo funciona MedicalSpot en menos de 4 minutos.
+    </h2>
+    <div class="ms-video-wrapper" id="video-wrapper">
+      <!-- Facade: editorial 3-zone — defers all YouTube JS/cookies until click -->
+      <div class="ms-video-facade" id="video-facade"
+           role="button" tabindex="0"
+           aria-label="Reproducir demo: Cómo opera tu sociedad con MedicalSpot, 4 minutos">
+
+        <!-- Zone 1: eyebrow + headline -->
+        <div class="ms-video-facade__top" aria-hidden="true">
+          <p class="ms-video-facade__eyebrow">Demo · 4 min</p>
+          <p class="ms-video-facade__headline">Cómo opera tu sociedad con MedicalSpot.</p>
+        </div>
+
+        <!-- Zone 2: play button -->
+        <div class="ms-video-facade__center" aria-hidden="true">
+          <span class="ms-video-facade__play">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="32" r="32" fill="var(--ms-green)"/>
+              <polygon points="26,19 50,32 26,45" fill="#FEFEFF"/>
+            </svg>
+          </span>
+          <p class="ms-video-facade__play-label">Reproducir</p>
+        </div>
+
+        <!-- Zone 3: feature tags -->
+        <p class="ms-video-facade__features" aria-hidden="true">
+          Membresías &nbsp;·&nbsp; Pagos &nbsp;·&nbsp; Eventos &nbsp;·&nbsp; Comunidad
+        </p>
+
+      </div>
+      <div class="ms-video-fallback" id="video-fallback" role="alert" aria-live="polite">
+        <p class="ms-video-fallback__text">El video no está disponible en este momento.</p>
+        <a href="https://youtu.be/_1DDJodzvSE" class="ms-video-fallback__link" target="_blank" rel="noopener noreferrer">
+          Puedes verlo directamente en YouTube →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     S-05 — Prueba Social
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  .ms-social-proof {
+    background-color: var(--ms-blue);
+    padding-block: var(--ms-space-9);
+  }
+  .ms-social-proof__inner {
+    width: 100%;
+    max-width: var(--ms-container-narrow);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ms-space-7);
+    text-align: center;
+  }
+  .ms-social-proof__heading {
+    font-family: var(--ms-font-family);
+    font-size: clamp(1.75rem, 4.5vw, 3.25rem);
+    font-weight: var(--ms-font-extrabold);
+    line-height: 1.15;
+    letter-spacing: var(--ms-tracking-tighter);
+    color: var(--ms-white);
+    margin: 0;
+  }
+  .ms-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ms-space-2);
+    background-color: var(--ms-chip-ondark-bg);
+    color: var(--ms-green-light-ondark);
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-small);
+    font-weight: var(--ms-font-medium);
+    letter-spacing: var(--ms-tracking-wide);
+    border-radius: var(--ms-radius-pill);
+    padding: 6px 14px 6px 10px;
+  }
+  .ms-chip__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--ms-green-light-ondark);
+    flex-shrink: 0;
+    animation: ms-pulse 2s cubic-bezier(0.2, 0, 0.2, 1) infinite;
+  }
+  @keyframes ms-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(1.4); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ms-chip__dot { animation: none; }
+  }
+  .ms-testimonial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ms-space-5);
+    max-width: 72ch;
+  }
+  .ms-testimonial__quote {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-h3);
+    font-weight: var(--ms-font-regular);
+    line-height: var(--ms-leading-lead);
+    color: var(--ms-white);
+    margin: 0;
+  }
+  .ms-testimonial__highlight {
+    font-style: italic;
+    color: var(--ms-green-light-ondark);
+  }
+  .ms-testimonial__attribution {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--ms-space-4);
+  }
+  .ms-testimonial__avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    flex-shrink: 0;
+    border: 2px solid var(--ms-green-light-ondark);
+  }
+  .ms-testimonial__author {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-1);
+    text-align: left;
+  }
+  .ms-testimonial__name {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-base);
+    font-weight: var(--ms-font-medium);
+    line-height: var(--ms-leading-base);
+    color: var(--ms-white);
+    margin: 0;
+  }
+  .ms-testimonial__org {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-small);
+    font-weight: var(--ms-font-regular);
+    line-height: var(--ms-leading-base);
+    color: var(--ms-green-light-ondark);
+    margin: 0;
+    letter-spacing: var(--ms-tracking-wide);
+  }
+  @media (max-width: 767px) {
+    .ms-social-proof { padding-block: 80px; }
+    .ms-social-proof__heading { font-size: clamp(1.625rem, 5vw, 2rem); }
+    .ms-testimonial__quote { font-size: var(--ms-text-lead); }
+  }
+</style>
+
+<section class="ms-social-proof" id="social-proof" aria-labelledby="social-proof-heading">
+  <div class="ms-social-proof__inner">
+
+    <h2 class="ms-social-proof__heading" id="social-proof-heading">
+      Ya operando en organizaciones médicas de Iberoamérica.
+    </h2>
+
+    <div class="ms-chip" role="status" aria-label="Estado activo: Academia Iberoamericana de Neurología Pediátrica">
+      <span class="ms-chip__dot" aria-hidden="true"></span>
+      AINP · Activo
+    </div>
+
+    <figure class="ms-testimonial">
+      <blockquote class="ms-testimonial__quote">
+        "Ha sido una excelente experiencia trabajar con MedicalSpot.
+        Costó trabajo convencer a la junta,
+        pero en este momento nadie duda de los beneficios; <span class="ms-testimonial__highlight">todos ven cómo hemos progresado</span>
+        y las herramientas de gestión son maravillosas."
+      </blockquote>
+      <figcaption class="ms-testimonial__attribution">
+        <img src="assets/maria-t.jpg"
+             alt="Dra. María Teresa Acosta"
+             class="ms-testimonial__avatar"
+             width="56" height="56"
+             loading="lazy">
+        <div class="ms-testimonial__author">
+          <p class="ms-testimonial__name">Dra. María Teresa Acosta, Presidente</p>
+          <p class="ms-testimonial__org">Academia Iberoamericana de Neurología Pediátrica (AINP)</p>
+        </div>
+      </figcaption>
+    </figure>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     S-06 — CTA Final
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  @keyframes ms-cta-pulse {
+    0%   { opacity: 0.55; transform: scale(0.96); }
+    60%  { opacity: 0.12; transform: scale(1.18); }
+    100% { opacity: 0;    transform: scale(1.35); }
+  }
+
+  .ms-cta-final {
+    position: relative;
+    overflow: hidden;
+    /* Drenched deep green — emotional peak of the page */
+    background: radial-gradient(
+      ellipse 75% 85% at 50% 55%,
+      var(--ms-forest-800) 0%,
+      var(--ms-forest-900) 100%
+    );
+    padding-block: var(--ms-space-10) calc(var(--ms-space-10) + var(--ms-space-5));
+  }
+
+  /* Ghost "20" — typographic texture anchored in background */
+  .ms-cta-final__ghost {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%);
+    font-family: var(--ms-font-family);
+    font-size: clamp(14rem, 38vw, 30rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--ms-forest-600);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    opacity: 0.55;
+  }
+
+  .ms-cta-final__inner {
+    position: relative; /* above ghost */
+    z-index: 1;
+    width: 100%;
+    max-width: var(--ms-container-narrow);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ms-space-7);
+    text-align: center;
+  }
+
+  .ms-cta-final__heading {
+    font-family: var(--ms-font-family);
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-weight: var(--ms-font-extrabold);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    color: var(--ms-white);
+    margin: 0;
+    max-width: 16ch;
+  }
+
+  .ms-cta-final__group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ms-space-4);
+  }
+
+  /* Button wrapper — hosts the pulsing glow ring */
+  .ms-cta-final__btn-wrap {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .ms-cta-final__btn-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+    animation: ms-cta-pulse 2.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s infinite;
+    pointer-events: none;
+  }
+
+  /* Inverted button: white bg, green text — pops on deep green surface */
+  .ms-cta-final .ms-btn {
+    background-color: var(--ms-white);
+    color: var(--ms-forest-500);
+    padding: 18px 32px;
+    font-size: var(--ms-text-base);
+    min-height: 44px;
+  }
+
+  .ms-cta-final .ms-btn .ms-btn__chip {
+    background-color: rgba(0, 179, 102, 0.14);
+    color: var(--ms-forest-500);
+  }
+
+  .ms-cta-final .ms-btn:hover {
+    background-color: var(--ms-white);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.30);
+  }
+
+  .ms-cta-final .ms-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+  }
+
+  /* Reassurance dots */
+  .ms-cta-final__reassurances {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--ms-space-4) var(--ms-space-6);
+  }
+
+  .ms-cta-final__reassurances li {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-small);
+    font-weight: var(--ms-font-medium);
+    color: rgba(254, 254, 255, 0.65);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .ms-cta-final__reassurances li::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--ms-mint-300);
+    flex-shrink: 0;
+  }
+  .ms-cta-final__pricing-note {
+    font-family: var(--ms-font-family);
+    font-size: 0.8125rem;
+    font-weight: var(--ms-font-regular);
+    color: rgba(254, 254, 255, 0.35);
+    text-align: center;
+    margin: var(--ms-space-3) 0 0;
+    max-width: 42ch;
+  }
+
+  @media (max-width: 767px) {
+    .ms-cta-final { padding-block: 80px; }
+    .ms-cta-final__heading { font-size: 2rem; }
+    .ms-cta-final__group { align-self: stretch; }
+    .ms-cta-final .ms-btn { width: 100%; justify-content: center; }
+    .ms-cta-final__ghost { font-size: 56vw; opacity: 0.35; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ms-cta-final__btn-wrap::before { animation: none; opacity: 0; }
+  }
+</style>
+
+<section class="ms-cta-final" id="cta-final" aria-labelledby="cta-final-heading">
+
+  <!-- Typographic texture — ghost "20" behind content -->
+  <span class="ms-cta-final__ghost" aria-hidden="true">20</span>
+
+  <div class="ms-cta-final__inner">
+
+    <h2 class="ms-cta-final__heading" id="cta-final-heading">
+      20 minutos que <em class="ms-h2-em">cambian</em> cómo opera tu sociedad.
+    </h2>
+
+    <div class="ms-cta-final__group">
+      <div class="ms-cta-final__btn-wrap">
+        <button
+          id="cta-final-btn"
+          class="ms-btn"
+          type="button"
+          aria-label="Agenda tu demo en Calendly"
+          data-cta="cta-final"
+        >
+          Agenda tu demo
+          <span class="ms-btn__chip" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+
+    <ul class="ms-cta-final__reassurances" aria-label="Garantías">
+      <li>Sin compromiso</li>
+      <li>20 minutos</li>
+      <li>Respuesta en 24 h</li>
+    </ul>
+    <p class="ms-cta-final__pricing-note">
+      Precios según el tamaño de tu sociedad. Los conoces en la demo, sin sorpresas.
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     S-07 — Footer
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  .ms-footer {
+    background-color: var(--ms-blue-700);
+    padding-block: var(--ms-space-8);
+  }
+  .ms-footer__inner {
+    width: 100%;
+    max-width: var(--ms-container-main);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-7);
+  }
+  .ms-footer__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ms-space-6);
+  }
+  .ms-footer__logo-link {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+  .ms-footer__logo { height: 28px; width: auto; display: block; }
+  .ms-footer__contact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--ms-space-1);
+  }
+  .ms-footer__tagline {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-small);
+    font-weight: var(--ms-font-regular);
+    color: var(--ms-sage-light);
+    margin: 0;
+  }
+  .ms-footer__email {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-small);
+    font-weight: var(--ms-font-medium);
+    color: var(--ms-white);
+    text-decoration: none;
+    transition: color var(--ms-duration-micro) var(--ms-ease-base);
+  }
+  .ms-footer__email:hover { color: var(--ms-green-light-ondark); }
+  .ms-footer__email:focus-visible { outline: 2px solid var(--ms-green-light-ondark); outline-offset: 2px; border-radius: 2px; }
+  .ms-footer__inteliti-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 2px;
+    transition: color var(--ms-duration-micro) var(--ms-ease-base),
+                text-decoration-color var(--ms-duration-micro) var(--ms-ease-base);
+  }
+  .ms-footer__inteliti-link:hover { color: var(--ms-green-light-ondark); text-decoration-color: var(--ms-green-light-ondark); }
+  .ms-footer__inteliti-link:focus-visible { outline: 2px solid var(--ms-green-light-ondark); outline-offset: 2px; border-radius: 2px; }
+  .ms-footer__divider { border: none; border-top: 1px solid rgba(255,255,255,0.12); margin: 0; }
+  .ms-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ms-space-5);
+  }
+  .ms-footer__copyright {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-small);
+    font-weight: var(--ms-font-regular);
+    color: var(--ms-sage-light);
+    margin: 0;
+  }
+  .ms-footer__legal { display: flex; align-items: center; gap: var(--ms-space-5); }
+  .ms-footer__legal-link {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-small);
+    font-weight: var(--ms-font-regular);
+    color: var(--ms-sage-light);
+    text-decoration: none;
+    transition: color var(--ms-duration-micro) var(--ms-ease-base);
+  }
+  .ms-footer__legal-link:hover { color: var(--ms-white); }
+  .ms-footer__legal-link:focus-visible { outline: 2px solid var(--ms-green-light-ondark); outline-offset: 2px; border-radius: 2px; }
+  @media (max-width: 767px) {
+    .ms-footer { padding-block: var(--ms-space-7); }
+    .ms-footer__top { flex-direction: column; align-items: flex-start; }
+    .ms-footer__contact { align-items: flex-start; }
+    .ms-footer__bottom { flex-direction: column; align-items: flex-start; gap: var(--ms-space-4); }
+    .ms-footer__legal { flex-direction: column; align-items: flex-start; gap: var(--ms-space-3); }
+  }
+</style>
+
+<footer class="ms-footer" id="footer" role="contentinfo">
+  <div class="ms-footer__inner">
+    <div class="ms-footer__top">
+      <a href="#" class="ms-footer__logo-link" aria-label="MedicalSpot, ir al inicio">
+        <img
+          src="assets/MedicalSpot_logo_white.svg"
+          alt="MedicalSpot"
+          class="ms-footer__logo"
+          width="140" height="28"
+          loading="lazy"
+        >
+      </a>
+      <div class="ms-footer__contact">
+        <p class="ms-footer__tagline">MedicalSpot, plataforma de <a href="https://inteliti.com" class="ms-footer__inteliti-link" target="_blank" rel="noopener noreferrer">inteliti</a></p>
+        <a href="mailto:hola@inteliti.com" class="ms-footer__email">hola@inteliti.com</a>
+      </div>
+    </div>
+    <hr class="ms-footer__divider">
+    <div class="ms-footer__bottom">
+      <p class="ms-footer__copyright">&copy; 2026 inteliti. Todos los derechos reservados.</p>
+      <nav class="ms-footer__legal" aria-label="Navegación legal">
+        <a href="politica-de-privacidad.html" class="ms-footer__legal-link">Política de privacidad</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     main.js — Comportamientos interactivos globales
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+  /* ── NavBar scroll ──────────────────────────────────────────── */
+  (function() {
+    var navbar = document.getElementById('navbar');
+    var threshold = 64;
+    function onScroll() {
+      if (window.scrollY > threshold) {
+        navbar.classList.add('is-scrolled');
+      } else {
+        navbar.classList.remove('is-scrolled');
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  /* ── Video facade — inject iframe on user intent ────────────── */
+  (function() {
+    var facade  = document.getElementById('video-facade');
+    var wrapper = document.getElementById('video-wrapper');
+    var fallback = document.getElementById('video-fallback');
+    if (!facade || !wrapper) return;
+
+    function activateVideo() {
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/_1DDJodzvSE?rel=0&modestbranding=1&autoplay=1';
+      iframe.title = 'Video de presentación de MedicalSpot';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;display:block;';
+
+      /* Fallback if iframe never fires load after 10 s */
+      var loaded = false;
+      iframe.addEventListener('load', function() { loaded = true; });
+      setTimeout(function() {
+        if (!loaded && fallback) {
+          iframe.style.display = 'none';
+          fallback.classList.add('is-visible');
+        }
+      }, 10000);
+
+      facade.remove();
+      wrapper.insertBefore(iframe, wrapper.firstChild);
+    }
+
+    facade.addEventListener('click', activateVideo);
+    facade.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateVideo(); }
+    });
+  })();
+
+  /* ── WhatsApp CTA integration ───────────────────────────────── */
+  (function() {
+    var WA_URL = 'https://calendly.com/eduardodiaz-inteliti/medicalspot-demo';
+    var cooldown = false;
+
+    /* Visual feedback on the CTA-final button: swap label → restore on tab return */
+    var ctaBtn = document.getElementById('cta-final-btn');
+    var labelEl = ctaBtn ? ctaBtn.querySelector('.ms-btn__label') : null;
+    var chipEl  = ctaBtn ? ctaBtn.querySelector('.ms-btn__chip')  : null;
+
+    function setCtaBtnPending() {
+      if (!ctaBtn) return;
+      ctaBtn.setAttribute('aria-busy', 'true');
+      ctaBtn.style.opacity = '0.78';
+      ctaBtn.style.transform = 'scale(0.97)';
+      if (labelEl) labelEl.textContent = 'Abriendo Calendly…';
+      if (chipEl)  chipEl.style.opacity = '0';
+    }
+
+    function resetCtaBtn() {
+      if (!ctaBtn) return;
+      ctaBtn.removeAttribute('aria-busy');
+      ctaBtn.style.opacity = '';
+      ctaBtn.style.transform = '';
+      if (labelEl) labelEl.textContent = 'Agenda tu demo';
+      if (chipEl)  chipEl.style.opacity = '';
+      cooldown = false;
+    }
+
+    function openWhatsApp(triggerEl) {
+      if (cooldown) return;
+      cooldown = true;
+      window.open(WA_URL, '_blank', 'noopener,noreferrer');
+      /* Micro-flash on whichever element was clicked */
+      if (triggerEl && triggerEl !== ctaBtn) {
+        triggerEl.style.transition = 'transform 0.14s cubic-bezier(0,0,0.2,1), opacity 0.14s';
+        triggerEl.style.transform  = 'scale(0.96)';
+        triggerEl.style.opacity    = '0.72';
+        setTimeout(function() {
+          triggerEl.style.transform = '';
+          triggerEl.style.opacity   = '';
+        }, 180);
+      }
+      /* CTA-final button: show pending state, clear when user returns to tab */
+      if (triggerEl === ctaBtn || !triggerEl) setCtaBtnPending();
+      /* Fallback reset after 6 s (covers cases where visibilitychange doesn't fire) */
+      var fallback = setTimeout(resetCtaBtn, 6000);
+      document.addEventListener('visibilitychange', function onVisible() {
+        if (document.visibilityState === 'visible') {
+          clearTimeout(fallback);
+          document.removeEventListener('visibilitychange', onVisible);
+          setTimeout(resetCtaBtn, 400);
+        }
+      });
+    }
+
+    /* CTA Final button */
+    /* Wrap the text node in a span so JS can swap it without touching the chip */
+    if (ctaBtn && !labelEl) {
+      var textNode = null;
+      ctaBtn.childNodes.forEach(function(n) {
+        if (n.nodeType === 3 && n.textContent.trim()) textNode = n;
+      });
+      if (textNode) {
+        var span = document.createElement('span');
+        span.className = 'ms-btn__label';
+        span.textContent = textNode.textContent.trim();
+        ctaBtn.replaceChild(span, textNode);
+        labelEl = span;
+      }
+    }
+    if (ctaBtn) {
+      ctaBtn.addEventListener('click', function() { openWhatsApp(ctaBtn); });
+    }
+
+    /* Navbar + Hero CTAs — micro-flash only, no label swap */
+    document.querySelectorAll('[data-cta="navbar"], [data-cta="hero"]').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        openWhatsApp(el);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

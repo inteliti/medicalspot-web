@@ -1,0 +1,338 @@
+<!-- ============================================================
+     S-02 — Hero Block
+     Componentes: C-02 Hero Block · C-08 CTA Button (variante lg)
+     Copy: B1 § S-01 — H1, Subheadline, CTA, Micro
+     Tokens: C2 § 2.1, § 3.4, § 4.2
+     ============================================================ -->
+
+<style>
+  /* ── Entrance animations ────────────────────────────────────── */
+  @keyframes ms-fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ms-fade-in-right {
+    from { opacity: 0; transform: translateX(18px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes ms-badge-in {
+    from { opacity: 0; transform: translateY(10px) scale(0.94); }
+    to   { opacity: 1; transform: translateY(0)   scale(1); }
+  }
+  @keyframes ms-pulse {
+    0%   { opacity: 0.7; transform: scale(0.7); }
+    100% { opacity: 0;   transform: scale(1.8); }
+  }
+
+  /* ── Hero Section ───────────────────────────────────────────── */
+  .ms-hero {
+    /* Subtle mint radial tint behind text column — adds depth without noise */
+    background: radial-gradient(ellipse 60% 100% at 18% 50%, #eef5f1 0%, var(--ms-white, #FEFEFF) 68%);
+    padding-block: var(--ms-space-8, 64px) var(--ms-space-9, 96px);
+    overflow: hidden;
+  }
+
+  .ms-hero__inner {
+    width: 100%;
+    max-width: var(--ms-container-main, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding, 24px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--ms-space-9, 96px);
+    /* stretch: image column fills the height of the text column */
+    align-items: stretch;
+  }
+
+  /* ── Text Column ────────────────────────────────────────────── */
+  .ms-hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-6, 32px);
+    justify-content: center;
+  }
+
+  .ms-hero__heading {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-h1, 4rem);
+    font-weight: var(--ms-font-bold, 700);
+    line-height: var(--ms-leading-tight, 1.10);
+    letter-spacing: var(--ms-tracking-tight, -0.02em);
+    color: var(--ms-blue, #1F3A5F);
+    margin: 0;
+    animation: ms-fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.10s both;
+  }
+
+  .ms-hero__subheadline {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-lead, 1.125rem);
+    font-weight: var(--ms-font-regular, 400);
+    line-height: var(--ms-leading-lead, 1.65);
+    color: var(--ms-ink, #424142);
+    margin: 0;
+    max-width: 48ch;
+    animation: ms-fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+  }
+
+  /* ── CTA Group ──────────────────────────────────────────────── */
+  .ms-hero__cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-3, 12px);
+    align-items: flex-start;
+    animation: ms-fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.40s both;
+  }
+
+  /* CTA Button lg */
+  .ms-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ms-space-3, 12px);
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-weight: var(--ms-font-bold, 700);
+    line-height: 1;
+    border: none;
+    border-radius: var(--ms-radius-pill, 999px);
+    cursor: pointer;
+    text-decoration: none;
+    background-color: var(--ms-green, #00B366);
+    color: var(--ms-white, #FEFEFF);
+    transition: background-color var(--ms-duration-micro, 150ms) var(--ms-ease-base, cubic-bezier(0.2,0,0.2,1)),
+                transform var(--ms-duration-micro, 150ms) var(--ms-ease-base, cubic-bezier(0.2,0,0.2,1)),
+                box-shadow var(--ms-duration-micro, 150ms) var(--ms-ease-base, cubic-bezier(0.2,0,0.2,1));
+    white-space: nowrap;
+  }
+
+  .ms-btn--lg {
+    padding: 18px 24px;
+    font-size: var(--ms-text-base, 1rem);
+    min-height: 44px;
+  }
+
+  .ms-btn__chip {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--ms-arrow-chip-bg, rgba(0,0,0,0.18));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--ms-duration-micro, 150ms) var(--ms-ease-base, cubic-bezier(0.2,0,0.2,1));
+    flex-shrink: 0;
+    font-size: 0.875rem;
+    line-height: 1;
+  }
+
+  .ms-btn:hover {
+    background-color: var(--ms-green-600, #009A57);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 179, 102, 0.28);
+  }
+
+  .ms-btn:hover .ms-btn__chip {
+    transform: translateX(2px);
+  }
+
+  .ms-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--ms-shadow-focus, 0 0 0 3px rgba(0,179,102,0.25));
+  }
+
+  /* Micro copy debajo del CTA */
+  .ms-hero__micro {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-small, 0.875rem);
+    font-weight: var(--ms-font-regular, 400);
+    line-height: var(--ms-leading-base, 1.5);
+    color: var(--ms-sage-dark, #628272);
+    margin: 0;
+  }
+
+  /* ── Visual Column ──────────────────────────────────────────── */
+  .ms-hero__visual {
+    position: relative;
+    border-radius: var(--ms-radius-xl, 20px);
+    overflow: hidden;
+    /* min-height as floor — actual height fills text column via align-items: stretch */
+    min-height: 400px;
+    background-color: var(--ms-bg-muted, #EEF2F0);
+    animation: ms-fade-in-right 0.70s cubic-bezier(0.16, 1, 0.3, 1) 0.20s both;
+  }
+
+  .ms-hero__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .ms-hero__visual:hover img {
+    transform: scale(1.025);
+  }
+
+  /* ── Trust Badge ────────────────────────────────────────────── */
+  .ms-hero__badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ms-white, #FEFEFF);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--ms-blue, #1F3A5F);
+    box-shadow: 0 4px 20px rgba(31,58,95,0.14), 0 1px 4px rgba(31,58,95,0.08);
+    animation: ms-badge-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.75s both;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .ms-hero__badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ms-green, #00B366);
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .ms-hero__badge-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid var(--ms-green, #00B366);
+    opacity: 0;
+    animation: ms-pulse 2.4s ease-out 1.2s infinite;
+  }
+
+  /* ── Mobile ≤ 767px ─────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .ms-hero {
+      padding-block: var(--ms-space-7, 48px) var(--ms-space-8, 64px);
+    }
+
+    .ms-hero__inner {
+      grid-template-columns: 1fr;
+      gap: var(--ms-space-7, 48px);
+      align-items: initial;
+    }
+
+    .ms-hero__content {
+      gap: var(--ms-space-5, 24px);
+    }
+
+    .ms-hero__heading {
+      font-size: 2.5rem;
+    }
+
+    .ms-hero__subheadline {
+      font-size: var(--ms-text-base, 1rem);
+    }
+
+    .ms-hero__cta-group {
+      align-items: stretch;
+    }
+
+    .ms-btn--lg {
+      justify-content: center;
+    }
+
+    .ms-hero__visual {
+      min-height: unset;
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  /* ── Responsive ≤ 360px (iPhone SE) ────────────────────────── */
+  @media (max-width: 360px) {
+    .ms-hero__heading {
+      font-size: 2rem;
+    }
+  }
+
+  /* ── Reduced motion ─────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .ms-hero__heading,
+    .ms-hero__subheadline,
+    .ms-hero__cta-group,
+    .ms-hero__visual,
+    .ms-hero__badge {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .ms-hero__visual img,
+    .ms-hero__visual:hover img {
+      transform: none;
+      transition: none;
+    }
+    .ms-hero__badge-dot::after {
+      animation: none;
+    }
+  }
+</style>
+
+<section
+  class="ms-hero"
+  id="hero"
+  aria-labelledby="hero-heading"
+>
+  <div class="ms-hero__inner">
+
+    <!-- Columna de texto -->
+    <div class="ms-hero__content">
+
+      <h1 class="ms-hero__heading" id="hero-heading">
+        Toda la gestión de tu sociedad médica, en un solo lugar.
+      </h1>
+
+      <p class="ms-hero__subheadline">
+        Membresías, pagos, eventos y comunidad en un solo lugar. Sin hojas de cálculo, sin correos cruzados.
+      </p>
+
+      <div class="ms-hero__cta-group">
+        <a
+          href="#cta-final"
+          class="ms-btn ms-btn--lg"
+          role="button"
+          aria-label="Agenda tu demo — 20 minutos, sin compromiso"
+          data-cta="hero"
+        >
+          Agenda tu demo — 20 minutos
+          <span class="ms-btn__chip" aria-hidden="true">→</span>
+        </a>
+        <p class="ms-hero__micro">
+          Sin compromiso. Solo una conversación de 20 minutos.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Columna visual -->
+    <div class="ms-hero__visual">
+      <img
+        src="../assets/hero.png"
+        alt="Directiva de sociedad médica revisando datos en sala de juntas con colegas al fondo"
+        loading="eager"
+        fetchpriority="high"
+        width="800"
+        height="600"
+      >
+      <!-- Trust badge — aparece con rebote suave a los 750ms -->
+      <div class="ms-hero__badge" aria-hidden="true">
+        <span class="ms-hero__badge-dot"></span>
+        <span>+5k médicos activos</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- JS: ver main.js → CTA data-cta="hero" activa el mismo flujo de Calendly que data-cta="navbar" -->

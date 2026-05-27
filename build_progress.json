@@ -1,0 +1,84 @@
+{
+  "project": "medicalspot-landing",
+  "output_file": "outputs/D/landing/index.html",
+  "impeccable_pass": "pending",
+
+  "groups": {
+    "A": {
+      "sections": ["S-01", "S-02"],
+      "status": "done",
+      "checkpoint": "review",
+      "preview_file": "outputs/D/landing/preview-A.html",
+      "feedback": "aprobado"
+    },
+    "B": {
+      "sections": ["S-03", "S-04", "S-05", "S-06", "S-07"],
+      "status": "done",
+      "checkpoint": "none",
+      "feedback": null
+    }
+  },
+
+  "assembly": {
+    "status": "done",
+    "checkpoint": "review",
+    "output": "outputs/D/landing/index.html",
+    "feedback": null
+  },
+
+  "sections": {
+    "S-01": {
+      "name": "NavBar",
+      "status": "done",
+      "file": "outputs/D/landing/sections/S-01-navbar.html",
+      "interactive": true,
+      "feedback": "aprobado"
+    },
+    "S-02": {
+      "name": "Hero",
+      "status": "done",
+      "file": "outputs/D/landing/sections/S-02-hero.html",
+      "interactive": false,
+      "feedback": "aprobado"
+    },
+    "S-03": {
+      "name": "Stats",
+      "status": "done",
+      "file": "outputs/D/landing/sections/S-03-stats.html",
+      "interactive": false,
+      "feedback": null,
+      "notes": "Números son placeholders — confirmar datos reales con el cliente"
+    },
+    "S-04": {
+      "name": "ProblemaSolucion",
+      "status": "done",
+      "file": "outputs/D/landing/sections/S-04-problema-solucion.html",
+      "interactive": true,
+      "feedback": null,
+      "notes": "Incluye Problema + Solución + Video. Video fallback si iframe no carga."
+    },
+    "S-05": {
+      "name": "SocialProof",
+      "status": "done",
+      "file": "outputs/D/landing/sections/S-05-social-proof.html",
+      "interactive": true,
+      "feedback": null,
+      "notes": "Chip con animación ms-pulse. prefers-reduced-motion respetado."
+    },
+    "S-06": {
+      "name": "CTAFinal",
+      "status": "done",
+      "file": "outputs/D/landing/sections/S-06-cta-final.html",
+      "interactive": true,
+      "feedback": null,
+      "notes": "Calendly URL es CALENDLY_URL_PLACEHOLDER — reemplazar antes de publicar."
+    },
+    "S-07": {
+      "name": "Footer",
+      "status": "done",
+      "file": "outputs/D/landing/sections/S-07-footer.html",
+      "interactive": false,
+      "feedback": null
+    }
+  }
+}

@@ -1,0 +1,106 @@
+<!-- ============================================================
+     S-03 — Stats
+     Nota: los números son placeholders — confirmar datos reales con el cliente
+     Tokens: C2 § 2.1 (Display, Eyebrow), § 3.1, § 3.4
+     ============================================================ -->
+
+<style>
+  .ms-stats {
+    background-color: var(--ms-bg-alt, #F7F9F8);
+    padding-block: var(--ms-space-9, 96px);
+  }
+
+  .ms-stats__inner {
+    width: 100%;
+    max-width: var(--ms-container-main, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding, 24px);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--ms-space-6, 32px);
+  }
+
+  .ms-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--ms-space-2, 8px);
+  }
+
+  .ms-stat__number {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-display, 5rem);
+    font-weight: var(--ms-font-bold, 700);
+    line-height: var(--ms-leading-display, 1.05);
+    letter-spacing: var(--ms-tracking-tighter, -0.03em);
+    color: var(--ms-green, #00B366);
+    margin: 0;
+  }
+
+  .ms-stat__label {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-base, 1rem);
+    font-weight: var(--ms-font-medium, 500);
+    line-height: var(--ms-leading-base, 1.5);
+    color: var(--ms-ink, #424142);
+    margin: 0;
+    max-width: 20ch;
+  }
+
+  /* Separadores verticales entre stats */
+  .ms-stat + .ms-stat {
+    border-left: 1px solid var(--ms-border, #E6EAE8);
+    padding-left: var(--ms-space-6, 32px);
+  }
+
+  @media (max-width: 767px) {
+    .ms-stats {
+      padding-block: 80px;
+    }
+
+    .ms-stats__inner {
+      grid-template-columns: 1fr;
+      gap: var(--ms-space-7, 48px);
+    }
+
+    .ms-stat + .ms-stat {
+      border-left: none;
+      border-top: 1px solid var(--ms-border, #E6EAE8);
+      padding-left: 0;
+      padding-top: var(--ms-space-7, 48px);
+    }
+
+    .ms-stat__number {
+      font-size: 3.5rem; /* reducción en mobile */
+    }
+  }
+</style>
+
+<section
+  class="ms-stats"
+  id="stats"
+  aria-label="Cifras de MedicalSpot"
+>
+  <div class="ms-stats__inner">
+
+    <div class="ms-stat">
+      <!-- PLACEHOLDER — confirmar número real con el cliente -->
+      <p class="ms-stat__number" aria-label="Más de 20 sociedades médicas">+20</p>
+      <p class="ms-stat__label">sociedades médicas gestionadas en Iberoamérica</p>
+    </div>
+
+    <div class="ms-stat">
+      <!-- PLACEHOLDER — confirmar número real con el cliente -->
+      <p class="ms-stat__number" aria-label="Más de 5000 miembros">+5k</p>
+      <p class="ms-stat__label">miembros activos en la plataforma</p>
+    </div>
+
+    <div class="ms-stat">
+      <!-- PLACEHOLDER — confirmar número real con el cliente -->
+      <p class="ms-stat__number" aria-label="Más de 200 eventos gestionados">+200</p>
+      <p class="ms-stat__label">eventos académicos organizados</p>
+    </div>
+
+  </div>
+</section>

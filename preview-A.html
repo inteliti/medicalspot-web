@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedicalSpot — Preview Grupo A (NavBar + Hero)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset mínimo ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Design Tokens — :root ──────────────────────────────── */
+    :root {
+      /* Colores */
+      --ms-green:           #00B366;
+      --ms-green-600:       #009A57;
+      --ms-green-700:       #00713F;
+      --ms-green-100:       #E6F7EF;
+      --ms-green-light-ondark: #7DDDB6;
+      --ms-blue:            #1F3A5F;
+      --ms-blue-700:        #16294A;
+      --ms-blue-200:        #E8ECF2;
+      --ms-ink:             #424142;
+      --ms-sage-dark:       #628272;
+      --ms-sage-light:      #AFC4BC;
+      --ms-white:           #FEFEFF;
+      --ms-bg-alt:          #F7F9F8;
+      --ms-bg-muted:        #EEF2F0;
+      --ms-border:          #E6EAE8;
+      --ms-selection-bg:    rgba(0, 179, 102, 0.22);
+      --ms-chip-ondark-bg:  rgba(125, 221, 182, 0.16);
+      --ms-photo-overlay:   rgba(31, 58, 95, 0.55);
+      --ms-arrow-chip-bg:   rgba(0, 0, 0, 0.18);
+
+      /* Tipografía */
+      --ms-font-family:     'Poppins', system-ui, -apple-system, sans-serif;
+      --ms-font-regular:    400;
+      --ms-font-medium:     500;
+      --ms-font-semibold:   600;
+      --ms-font-bold:       700;
+      --ms-text-display:    5rem;
+      --ms-text-h1:         4rem;
+      --ms-text-h2:         2.25rem;
+      --ms-text-h3:         1.75rem;
+      --ms-text-h4:         1.375rem;
+      --ms-text-lead:       1.125rem;
+      --ms-text-base:       1rem;
+      --ms-text-small:      0.875rem;
+      --ms-text-eyebrow:    0.75rem;
+      --ms-leading-display: 1.05;
+      --ms-leading-heading: 1.25;
+      --ms-leading-tight:   1.10;
+      --ms-leading-lead:    1.65;
+      --ms-leading-base:    1.50;
+      --ms-tracking-tight:  -0.02em;
+      --ms-tracking-tighter:-0.03em;
+      --ms-tracking-wide:   0.04em;
+      --ms-tracking-wider:  0.10em;
+
+      /* Espaciado */
+      --ms-space-1:  4px;
+      --ms-space-2:  8px;
+      --ms-space-3:  12px;
+      --ms-space-4:  16px;
+      --ms-space-5:  24px;
+      --ms-space-6:  32px;
+      --ms-space-7:  48px;
+      --ms-space-8:  64px;
+      --ms-space-9:  96px;
+      --ms-space-10: 128px;
+
+      /* Radios */
+      --ms-radius-sm:   6px;
+      --ms-radius-md:   8px;
+      --ms-radius-lg:   12px;
+      --ms-radius-xl:   20px;
+      --ms-radius-pill: 999px;
+
+      /* Sombras */
+      --ms-shadow-sm:    0 1px 2px rgba(31,58,95,0.06);
+      --ms-shadow-md:    0 4px 12px rgba(31,58,95,0.08);
+      --ms-shadow-lg:    0 12px 32px rgba(31,58,95,0.12);
+      --ms-shadow-focus: 0 0 0 3px rgba(0,179,102,0.25);
+
+      /* Contenedores */
+      --ms-container-main:    1200px;
+      --ms-container-narrow:  880px;
+      --ms-container-padding: 24px;
+      --ms-section-v:         var(--ms-space-9);
+      --ms-section-v-lg:      var(--ms-space-10);
+
+      /* Motion */
+      --ms-duration-micro:     150ms;
+      --ms-duration-component: 200ms;
+      --ms-duration-page:      300ms;
+      --ms-ease-base:          cubic-bezier(0.2, 0, 0.2, 1);
+      --ms-ease-in:            cubic-bezier(0.4, 0, 1, 1);
+      --ms-ease-out:           cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    ::selection {
+      background-color: var(--ms-selection-bg);
+    }
+
+    @media (max-width: 767px) {
+      :root {
+        --ms-text-h1:      2.5rem;
+        --ms-text-h2:      1.75rem;
+        --ms-text-h3:      1.375rem;
+        --ms-text-h4:      1.125rem;
+        --ms-text-lead:    1.0625rem;
+        --ms-text-eyebrow: 0.6875rem;
+        --ms-section-v:    80px;
+        --ms-section-v-lg: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     S-01 — NavBar
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  .ms-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    background-color: var(--ms-white);
+    box-shadow: none;
+    border-bottom: 1px solid transparent;
+    transition:
+      box-shadow var(--ms-duration-component, 200ms) var(--ms-ease-base, cubic-bezier(0.2,0,0.2,1)),
+      border-color var(--ms-duration-component, 200ms) var(--ms-ease-base, cubic-bezier(0.2,0,0.2,1));
+  }
+  .ms-navbar.is-scrolled {
+    box-shadow: var(--ms-shadow-md);
+    border-bottom-color: var(--ms-border);
+  }
+  .ms-navbar__inner {
+    width: 100%;
+    max-width: var(--ms-container-main, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding, 24px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ms-navbar__logo-link {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+  .ms-navbar__logo {
+    height: 32px;
+    width: auto;
+    display: block;
+  }
+  .ms-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ms-space-3, 12px);
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-weight: var(--ms-font-bold, 700);
+    line-height: 1;
+    border: none;
+    border-radius: var(--ms-radius-pill, 999px);
+    cursor: pointer;
+    text-decoration: none;
+    background-color: var(--ms-green, #00B366);
+    color: var(--ms-white, #FEFEFF);
+    transition: background-color var(--ms-duration-micro, 150ms) var(--ms-ease-base, cubic-bezier(0.2,0,0.2,1));
+    white-space: nowrap;
+  }
+  .ms-btn--sm {
+    padding: 10px 16px;
+    font-size: var(--ms-text-small, 0.875rem);
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .ms-btn--lg {
+    padding: 18px 24px;
+    font-size: var(--ms-text-base, 1rem);
+    min-height: 44px;
+  }
+  .ms-btn__chip {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--ms-arrow-chip-bg, rgba(0,0,0,0.18));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--ms-duration-micro, 150ms) var(--ms-ease-base, cubic-bezier(0.2,0,0.2,1));
+    flex-shrink: 0;
+    font-size: 0.875rem;
+    line-height: 1;
+  }
+  .ms-btn:hover { background-color: var(--ms-green-600, #009A57); }
+  .ms-btn:hover .ms-btn__chip { transform: translateX(2px); }
+  .ms-btn:focus-visible { outline: none; box-shadow: var(--ms-shadow-focus); }
+  @media (max-width: 767px) {
+    .ms-navbar { height: 60px; }
+    .ms-navbar__logo { height: 26px; }
+  }
+</style>
+
+<nav class="ms-navbar" role="navigation" aria-label="Navegación principal" id="navbar">
+  <div class="ms-navbar__inner">
+    <a href="#" class="ms-navbar__logo-link" aria-label="MedicalSpot — ir al inicio">
+      <img
+        src="assets/MedicalSpot_logo_color.svg"
+        alt="MedicalSpot"
+        class="ms-navbar__logo"
+        width="160" height="32"
+        loading="eager" fetchpriority="high"
+      >
+    </a>
+    <a href="#cta-final" class="ms-btn ms-btn--sm" role="button"
+       aria-label="Agenda tu demo — abre formulario de agendamiento"
+       data-cta="navbar">
+      Agenda tu demo
+    </a>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     S-02 — Hero Block
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  .ms-hero {
+    background-color: var(--ms-white);
+    padding-block: var(--ms-space-10, 128px) var(--ms-space-9, 96px);
+    overflow: hidden;
+  }
+  .ms-hero__inner {
+    width: 100%;
+    max-width: var(--ms-container-main, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding, 24px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--ms-space-9, 96px);
+    align-items: center;
+  }
+  .ms-hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-6, 32px);
+  }
+  .ms-hero__heading {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-h1, 4rem);
+    font-weight: var(--ms-font-bold, 700);
+    line-height: var(--ms-leading-tight, 1.10);
+    letter-spacing: var(--ms-tracking-tight, -0.02em);
+    color: var(--ms-blue, #1F3A5F);
+    margin: 0;
+  }
+  .ms-hero__subheadline {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-lead, 1.125rem);
+    font-weight: var(--ms-font-regular, 400);
+    line-height: var(--ms-leading-lead, 1.65);
+    color: var(--ms-ink, #424142);
+    margin: 0;
+    max-width: 48ch;
+  }
+  .ms-hero__cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-3, 12px);
+    align-items: flex-start;
+  }
+  .ms-hero__micro {
+    font-family: var(--ms-font-family);
+    font-size: var(--ms-text-small, 0.875rem);
+    font-weight: var(--ms-font-regular, 400);
+    line-height: var(--ms-leading-base, 1.5);
+    color: var(--ms-sage-dark, #628272);
+    margin: 0;
+  }
+  .ms-hero__visual {
+    position: relative;
+    border-radius: var(--ms-radius-xl, 20px);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background-color: var(--ms-bg-muted, #EEF2F0);
+  }
+  .ms-hero__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  @media (max-width: 767px) {
+    .ms-hero { padding-block: var(--ms-space-9, 96px) var(--ms-space-8, 64px); }
+    .ms-hero__inner { grid-template-columns: 1fr; gap: var(--ms-space-7, 48px); }
+    .ms-hero__content { gap: var(--ms-space-5, 24px); }
+    .ms-hero__heading { font-size: 2.5rem; }
+    .ms-hero__subheadline { font-size: var(--ms-text-base, 1rem); }
+    .ms-hero__cta-group { align-items: stretch; }
+    .ms-btn--lg { justify-content: center; }
+    .ms-hero__visual { aspect-ratio: 16 / 9; }
+  }
+  @media (max-width: 360px) {
+    .ms-hero__heading { font-size: 2rem; }
+  }
+</style>
+
+<section class="ms-hero" id="hero" aria-labelledby="hero-heading">
+  <div class="ms-hero__inner">
+    <div class="ms-hero__content">
+      <h1 class="ms-hero__heading" id="hero-heading">
+        Toda la gestión de tu sociedad médica, en un solo lugar.
+      </h1>
+      <p class="ms-hero__subheadline">
+        Membresías, pagos, eventos y comunidad en un solo lugar. Sin hojas de cálculo, sin correos cruzados.
+      </p>
+      <div class="ms-hero__cta-group">
+        <a href="#cta-final" class="ms-btn ms-btn--lg" role="button"
+           aria-label="Agenda tu demo — 20 minutos, sin compromiso"
+           data-cta="hero">
+          Agenda tu demo — 20 minutos
+          <span class="ms-btn__chip" aria-hidden="true">→</span>
+        </a>
+        <p class="ms-hero__micro">
+          Sin compromiso. Solo una conversación de 20 minutos.
+        </p>
+      </div>
+    </div>
+    <div class="ms-hero__visual">
+      <img
+        src="assets/hero.png"
+        alt="Directiva de sociedad médica revisando datos en sala de juntas con colegas al fondo"
+        loading="eager"
+        fetchpriority="high"
+        width="800"
+        height="600"
+      >
+    </div>
+  </div>
+</section>
+
+
+<!-- ── NavBar scroll JS ──────────────────────────────────────── -->
+<script>
+  (function() {
+    var navbar = document.getElementById('navbar');
+    var threshold = 64;
+    function onScroll() {
+      if (window.scrollY > threshold) {
+        navbar.classList.add('is-scrolled');
+      } else {
+        navbar.classList.remove('is-scrolled');
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

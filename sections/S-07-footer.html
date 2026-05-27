@@ -1,0 +1,208 @@
+<!-- ============================================================
+     S-07 — Footer
+     Copy: B1 § S-07
+     Componente: C-09 Footer
+     Tokens: C2 § 1.1 (--ms-blue-700 fondo), § 3.1, § 3.4
+     Sin componentes interactivos (C1 § S-07)
+     ============================================================ -->
+
+<style>
+  .ms-footer {
+    background-color: var(--ms-blue-700, #16294A);
+    padding-block: var(--ms-space-8, 64px);
+  }
+
+  .ms-footer__inner {
+    width: 100%;
+    max-width: var(--ms-container-main, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding, 24px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-7, 48px);
+  }
+
+  /* ── Top row: logo + contact ──────────────────────────────── */
+  .ms-footer__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ms-space-6, 32px);
+  }
+
+  .ms-footer__logo-link {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .ms-footer__logo {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+
+  .ms-footer__contact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--ms-space-1, 4px);
+  }
+
+  .ms-footer__tagline {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-small, 0.875rem);
+    font-weight: var(--ms-font-regular, 400);
+    color: var(--ms-sage-light, #AFC4BC);
+    margin: 0;
+  }
+
+  .ms-footer__email {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-small, 0.875rem);
+    font-weight: var(--ms-font-medium, 500);
+    color: var(--ms-white, #FEFEFF);
+    text-decoration: none;
+    transition: color var(--ms-duration-micro, 150ms) var(--ms-ease-base, cubic-bezier(0.2,0,0.2,1));
+  }
+
+  .ms-footer__email:hover {
+    color: var(--ms-green-light-ondark, #7DDDB6);
+  }
+
+  .ms-footer__email:focus-visible {
+    outline: 2px solid var(--ms-green-light-ondark, #7DDDB6);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* ── Divider ──────────────────────────────────────────────── */
+  .ms-footer__divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin: 0;
+  }
+
+  /* ── Bottom row: legal + copyright ───────────────────────── */
+  .ms-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ms-space-5, 24px);
+  }
+
+  .ms-footer__copyright {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-small, 0.875rem);
+    font-weight: var(--ms-font-regular, 400);
+    color: var(--ms-sage-light, #AFC4BC);
+    margin: 0;
+  }
+
+  .ms-footer__legal {
+    display: flex;
+    align-items: center;
+    gap: var(--ms-space-5, 24px);
+  }
+
+  .ms-footer__legal-link {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-small, 0.875rem);
+    font-weight: var(--ms-font-regular, 400);
+    color: var(--ms-sage-light, #AFC4BC);
+    text-decoration: none;
+    transition: color var(--ms-duration-micro, 150ms) var(--ms-ease-base, cubic-bezier(0.2,0,0.2,1));
+  }
+
+  .ms-footer__legal-link:hover {
+    color: var(--ms-white, #FEFEFF);
+  }
+
+  .ms-footer__legal-link:focus-visible {
+    outline: 2px solid var(--ms-green-light-ondark, #7DDDB6);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* ── Mobile ≤ 767px ─────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .ms-footer {
+      padding-block: var(--ms-space-7, 48px);
+    }
+
+    .ms-footer__top {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .ms-footer__contact {
+      align-items: flex-start;
+    }
+
+    .ms-footer__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--ms-space-4, 16px);
+    }
+
+    .ms-footer__legal {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--ms-space-3, 12px);
+    }
+  }
+</style>
+
+<footer
+  class="ms-footer"
+  id="footer"
+  role="contentinfo"
+>
+  <div class="ms-footer__inner">
+
+    <div class="ms-footer__top">
+
+      <!-- Logo blanco — variante on-dark -->
+      <a href="#" class="ms-footer__logo-link" aria-label="MedicalSpot — ir al inicio">
+        <img
+          src="../assets/MedicalSpot_logo_white.svg"
+          alt="MedicalSpot"
+          class="ms-footer__logo"
+          width="140"
+          height="28"
+          loading="lazy"
+        >
+      </a>
+
+      <!-- Identidad + contacto -->
+      <div class="ms-footer__contact">
+        <p class="ms-footer__tagline">MedicalSpot, plataforma de inteliti</p>
+        <a
+          href="mailto:hola@medicalspot.io"
+          class="ms-footer__email"
+        >
+          hola@medicalspot.io
+        </a>
+      </div>
+
+    </div>
+
+    <hr class="ms-footer__divider">
+
+    <div class="ms-footer__bottom">
+      <p class="ms-footer__copyright">
+        &copy; 2026 inteliti. Todos los derechos reservados.
+      </p>
+      <nav class="ms-footer__legal" aria-label="Navegación legal">
+        <a
+          href="/politica-de-privacidad"
+          class="ms-footer__legal-link"
+        >
+          Política de privacidad
+        </a>
+      </nav>
+    </div>
+
+  </div>
+</footer>

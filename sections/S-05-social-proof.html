@@ -1,0 +1,174 @@
+<!-- ============================================================
+     S-05 — Prueba Social
+     Copy: B1 § S-05
+     Componente: C-06 Social Proof Block — chip on-dark con animación pulse
+     Tokens: C2 § 1.1 (--ms-blue fondo), § 1.3 (chip-ondark), § 3.1, § 3.4
+     Interacción: C1 § C-06 (ms-pulse, prefers-reduced-motion)
+     ============================================================ -->
+
+<style>
+  .ms-social-proof {
+    background-color: var(--ms-blue, #1F3A5F);
+    padding-block: var(--ms-space-9, 96px);
+  }
+
+  .ms-social-proof__inner {
+    width: 100%;
+    max-width: var(--ms-container-narrow, 880px);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding, 24px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ms-space-7, 48px);
+    text-align: center;
+  }
+
+  /* ── Section heading ────────────────────────────────────────── */
+  .ms-social-proof__heading {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-h2, 2.25rem);
+    font-weight: var(--ms-font-bold, 700);
+    line-height: var(--ms-leading-heading, 1.25);
+    letter-spacing: var(--ms-tracking-tight, -0.02em);
+    color: var(--ms-white, #FEFEFF);
+    margin: 0;
+  }
+
+  /* ── Chip on-dark — AINP activo ─────────────────────────────── */
+  .ms-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ms-space-2, 8px);
+    background-color: var(--ms-chip-ondark-bg, rgba(125, 221, 182, 0.16));
+    color: var(--ms-green-light-ondark, #7DDDB6);
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-small, 0.875rem);
+    font-weight: var(--ms-font-medium, 500);
+    letter-spacing: var(--ms-tracking-wide, 0.04em);
+    border-radius: var(--ms-radius-pill, 999px);
+    padding: 6px 14px 6px 10px;
+  }
+
+  .ms-chip__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--ms-green-light-ondark, #7DDDB6);
+    flex-shrink: 0;
+    animation: ms-pulse 2s cubic-bezier(0.2, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes ms-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ms-chip__dot { animation: none; }
+  }
+
+  /* ── Testimonial block ──────────────────────────────────────── */
+  .ms-testimonial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ms-space-5, 24px);
+    max-width: 72ch;
+  }
+
+  .ms-testimonial__quote {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-h3, 1.75rem);
+    font-weight: var(--ms-font-regular, 400);
+    line-height: var(--ms-leading-lead, 1.65);
+    color: var(--ms-white, #FEFEFF);
+    margin: 0;
+    quotes: "\201C" "\201D";
+  }
+
+  /* "Costó trabajo convencer a la junta" — destacado tipográfico
+     Clave de conversión para Ruta C: champion que debe convencer a su Junta */
+  .ms-testimonial__highlight {
+    font-style: italic;
+    color: var(--ms-green-light-ondark, #7DDDB6);
+  }
+
+  .ms-testimonial__attribution {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-1, 4px);
+  }
+
+  .ms-testimonial__name {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-base, 1rem);
+    font-weight: var(--ms-font-medium, 500);
+    line-height: var(--ms-leading-base, 1.5);
+    color: var(--ms-white, #FEFEFF);
+    margin: 0;
+  }
+
+  .ms-testimonial__org {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-small, 0.875rem);
+    font-weight: var(--ms-font-regular, 400);
+    line-height: var(--ms-leading-base, 1.5);
+    color: var(--ms-green-light-ondark, #7DDDB6);
+    margin: 0;
+    letter-spacing: var(--ms-tracking-wide, 0.04em);
+  }
+
+  /* ── Mobile ≤ 767px ─────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .ms-social-proof {
+      padding-block: 80px;
+    }
+
+    .ms-social-proof__heading {
+      font-size: 1.75rem;
+    }
+
+    .ms-testimonial__quote {
+      font-size: var(--ms-text-lead, 1.125rem);
+    }
+  }
+</style>
+
+<section
+  class="ms-social-proof"
+  id="social-proof"
+  aria-labelledby="social-proof-heading"
+>
+  <div class="ms-social-proof__inner">
+
+    <h2 class="ms-social-proof__heading" id="social-proof-heading">
+      Ya operando en organizaciones médicas de Iberoamérica
+    </h2>
+
+    <!-- Chip de estado activo — C-06 -->
+    <div
+      class="ms-chip"
+      role="status"
+      aria-label="Estado: activo — Academia Iberoamericana de Neurología Pediátrica"
+    >
+      <span class="ms-chip__dot" aria-hidden="true"></span>
+      AINP — Activo
+    </div>
+
+    <!-- Testimonio — Dra. María Teresa Acosta -->
+    <figure class="ms-testimonial">
+      <blockquote class="ms-testimonial__quote">
+        "Ha sido una excelente experiencia trabajar con MedicalSpot.
+        <span class="ms-testimonial__highlight">Costó trabajo convencer a la junta</span>,
+        pero en este momento nadie duda de los beneficios; todos ven cómo hemos progresado
+        y las herramientas de gestión son maravillosas."
+      </blockquote>
+      <figcaption class="ms-testimonial__attribution">
+        <p class="ms-testimonial__name">Dra. María Teresa Acosta, Presidenta</p>
+        <p class="ms-testimonial__org">Academia Iberoamericana de Neurología Pediátrica (AINP)</p>
+      </figcaption>
+    </figure>
+
+  </div>
+</section>

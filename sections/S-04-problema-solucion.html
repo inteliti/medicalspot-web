@@ -1,0 +1,413 @@
+<!-- ============================================================
+     S-04 — Problema + Solución + Video
+     Copy: B1 § S-02 (Problema), § S-03 (Solución), § S-04 (Video)
+     Componentes: C-03 Problem Cards, C-04 Solution Cards, C-05 Video Embed
+     Tokens: C2 § 2.1, § 3.1, § 3.3, § 3.4
+     Interacción: C1 § C-05 (video fallback, aspect-ratio, rel=0)
+     ============================================================ -->
+
+<style>
+  /* ── Shared: section layout ────────────────────────────────── */
+  .ms-problema,
+  .ms-solucion,
+  .ms-video-section {
+    padding-block: var(--ms-space-9, 96px);
+  }
+
+  .ms-problema__inner,
+  .ms-solucion__inner,
+  .ms-video-section__inner {
+    width: 100%;
+    max-width: var(--ms-container-main, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--ms-container-padding, 24px);
+  }
+
+  /* ── Section headings ──────────────────────────────────────── */
+  .ms-section-heading {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-h2, 2.25rem);
+    font-weight: var(--ms-font-bold, 700);
+    line-height: var(--ms-leading-heading, 1.25);
+    letter-spacing: var(--ms-tracking-tight, -0.02em);
+    color: var(--ms-blue, #1F3A5F);
+    margin: 0 0 var(--ms-space-8, 64px);
+    text-align: center;
+  }
+
+  /* ── Card grid (shared by C-03 and C-04) ──────────────────── */
+  .ms-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--ms-space-6, 32px);
+  }
+
+  /* ── C-03 Problem Cards ────────────────────────────────────── */
+  .ms-problema {
+    background-color: var(--ms-bg-alt, #F7F9F8);
+  }
+
+  .ms-problem-card {
+    background-color: var(--ms-white, #FEFEFF);
+    border: 1px solid var(--ms-border, #E6EAE8);
+    border-radius: var(--ms-radius-lg, 12px);
+    padding: var(--ms-space-7, 48px) var(--ms-space-6, 32px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-4, 16px);
+    box-shadow: var(--ms-shadow-sm, 0 1px 2px rgba(31,58,95,0.06));
+  }
+
+  .ms-problem-card__icon {
+    width: 48px;
+    height: 48px;
+    color: var(--ms-sage-dark, #628272);
+    flex-shrink: 0;
+  }
+
+  .ms-problem-card__title {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-h4, 1.375rem);
+    font-weight: var(--ms-font-semibold, 600);
+    line-height: var(--ms-leading-heading, 1.25);
+    color: var(--ms-blue, #1F3A5F);
+    margin: 0;
+  }
+
+  .ms-problem-card__body {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-base, 1rem);
+    font-weight: var(--ms-font-regular, 400);
+    line-height: var(--ms-leading-base, 1.5);
+    color: var(--ms-ink, #424142);
+    margin: 0;
+  }
+
+  /* ── C-04 Solution Cards ───────────────────────────────────── */
+  .ms-solucion {
+    background-color: var(--ms-white, #FEFEFF);
+  }
+
+  .ms-solution-card {
+    background-color: var(--ms-bg-alt, #F7F9F8);
+    border: 1px solid var(--ms-border, #E6EAE8);
+    border-radius: var(--ms-radius-lg, 12px);
+    padding: var(--ms-space-7, 48px) var(--ms-space-6, 32px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-4, 16px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ms-solution-card__icon {
+    width: 48px;
+    height: 48px;
+    color: var(--ms-green, #00B366);
+    flex-shrink: 0;
+  }
+
+  .ms-solution-card__title {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-h4, 1.375rem);
+    font-weight: var(--ms-font-semibold, 600);
+    line-height: var(--ms-leading-heading, 1.25);
+    color: var(--ms-blue, #1F3A5F);
+    margin: 0;
+  }
+
+  .ms-solution-card__body {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-base, 1rem);
+    font-weight: var(--ms-font-regular, 400);
+    line-height: var(--ms-leading-base, 1.5);
+    color: var(--ms-ink, #424142);
+    margin: 0;
+  }
+
+  /* ── C-05 Video Embed ──────────────────────────────────────── */
+  .ms-video-section {
+    background-color: var(--ms-bg-alt, #F7F9F8);
+  }
+
+  .ms-video-section__inner {
+    max-width: var(--ms-container-narrow, 880px);
+  }
+
+  .ms-video-section .ms-section-heading {
+    margin-bottom: var(--ms-space-7, 48px);
+  }
+
+  .ms-video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--ms-radius-xl, 20px);
+    overflow: hidden;
+    background-color: var(--ms-bg-muted, #EEF2F0);
+    box-shadow: var(--ms-shadow-lg, 0 12px 32px rgba(31,58,95,0.12));
+  }
+
+  .ms-video-wrapper iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* Fallback visible cuando el iframe falla */
+  .ms-video-fallback {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background-color: var(--ms-bg-muted, #EEF2F0);
+    border-radius: var(--ms-radius-xl, 20px);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--ms-space-6, 32px);
+  }
+
+  .ms-video-fallback.is-visible {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ms-space-4, 16px);
+  }
+
+  .ms-video-fallback__text {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-base, 1rem);
+    color: var(--ms-ink, #424142);
+    margin: 0;
+  }
+
+  .ms-video-fallback__link {
+    font-family: var(--ms-font-family, 'Poppins', system-ui, sans-serif);
+    font-size: var(--ms-text-base, 1rem);
+    font-weight: var(--ms-font-medium, 500);
+    color: var(--ms-green, #00B366);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── Mobile ≤ 767px ─────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .ms-problema,
+    .ms-solucion,
+    .ms-video-section {
+      padding-block: 80px;
+    }
+
+    .ms-section-heading {
+      font-size: var(--ms-text-h2, 1.75rem);
+      margin-bottom: var(--ms-space-7, 48px);
+      text-align: left;
+    }
+
+    .ms-cards {
+      grid-template-columns: 1fr;
+      gap: var(--ms-space-5, 24px);
+    }
+
+    .ms-problem-card,
+    .ms-solution-card {
+      padding: var(--ms-space-6, 32px) var(--ms-space-5, 24px);
+    }
+  }
+</style>
+
+<!-- ── S-02 Problema ──────────────────────────────────────────── -->
+<section
+  class="ms-problema"
+  id="problema"
+  aria-labelledby="problema-heading"
+>
+  <div class="ms-problema__inner">
+    <h2 class="ms-section-heading" id="problema-heading">
+      ¿Tu sociedad sigue operando así?
+    </h2>
+
+    <div class="ms-cards" role="list">
+
+      <article class="ms-problem-card" role="listitem">
+        <!-- Ícono: hoja de cálculo / gestión manual -->
+        <svg class="ms-problem-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="6" y="6" width="36" height="36" rx="4"/>
+          <line x1="6" y1="17" x2="42" y2="17"/>
+          <line x1="17" y1="6" x2="17" y2="42"/>
+          <line x1="22" y1="25" x2="38" y2="25"/>
+          <line x1="22" y1="33" x2="38" y2="33"/>
+        </svg>
+        <h3 class="ms-problem-card__title">
+          Todo por WhatsApp y hojas de cálculo
+        </h3>
+        <p class="ms-problem-card__body">
+          Cobrar cuotas, registrar miembros, coordinar eventos: todo manual, todo disperso, todo consumiendo tiempo de la directiva.
+        </p>
+      </article>
+
+      <article class="ms-problem-card" role="listitem">
+        <!-- Ícono: nodos desconectados -->
+        <svg class="ms-problem-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="24" r="6"/>
+          <circle cx="36" cy="12" r="6"/>
+          <circle cx="36" cy="36" r="6"/>
+          <line x1="18" y1="21" x2="29" y2="15" stroke-dasharray="4 4"/>
+          <line x1="18" y1="27" x2="29" y2="33" stroke-dasharray="4 4"/>
+        </svg>
+        <h3 class="ms-problem-card__title">
+          Los socios no se conectan entre sí
+        </h3>
+        <p class="ms-problem-card__body">
+          Tu sociedad no tiene un espacio digital propio. La comunidad existe, pero no tiene dónde reunirse ni crecer.
+        </p>
+      </article>
+
+      <article class="ms-problem-card" role="listitem">
+        <!-- Ícono: gráfico de presión de valor -->
+        <svg class="ms-problem-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6,36 16,24 26,30 42,12"/>
+          <polyline points="33,12 42,12 42,21"/>
+          <line x1="6" y1="42" x2="42" y2="42"/>
+        </svg>
+        <h3 class="ms-problem-card__title">
+          La directiva no puede justificar el valor de pertenecer
+        </h3>
+        <p class="ms-problem-card__body">
+          Sin herramientas, es difícil demostrar que la membresía vale. La presión de generar valor recae en la directiva, no en la plataforma.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── S-03 Solución ──────────────────────────────────────────── -->
+<section
+  class="ms-solucion"
+  id="solucion"
+  aria-labelledby="solucion-heading"
+>
+  <div class="ms-solucion__inner">
+    <h2 class="ms-section-heading" id="solucion-heading">
+      MedicalSpot centraliza todo en un solo lugar.
+    </h2>
+
+    <div class="ms-cards" role="list">
+
+      <article class="ms-solution-card" role="listitem">
+        <!-- Ícono: automatización / eficiencia -->
+        <svg class="ms-solution-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="24" cy="24" r="6"/>
+          <path d="M24 6v4M24 38v4M6 24h4M38 24h4M10.1 10.1l2.8 2.8M35.1 35.1l2.8 2.8M35.1 10.1l-2.8 2.8M10.1 35.1l2.8 2.8"/>
+        </svg>
+        <h3 class="ms-solution-card__title">
+          Gestión automática, sin esfuerzo manual
+        </h3>
+        <p class="ms-solution-card__body">
+          MedicalSpot automatiza membresías, cobros y comunicaciones para que la directiva dirija, no administre.
+        </p>
+      </article>
+
+      <article class="ms-solution-card" role="listitem">
+        <!-- Ícono: comunidad / hub conectado -->
+        <svg class="ms-solution-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="24" cy="24" r="6"/>
+          <circle cx="12" cy="38" r="5"/>
+          <circle cx="36" cy="38" r="5"/>
+          <circle cx="12" cy="10" r="5"/>
+          <circle cx="36" cy="10" r="5"/>
+          <line x1="17" y1="21" x2="19" y2="14"/>
+          <line x1="31" y1="21" x2="29" y2="14"/>
+          <line x1="17" y1="27" x2="15" y2="33"/>
+          <line x1="31" y1="27" x2="33" y2="33"/>
+        </svg>
+        <h3 class="ms-solution-card__title">
+          Un espacio digital propio para tu sociedad
+        </h3>
+        <p class="ms-solution-card__body">
+          Tu comunidad de miembros tiene dónde conectarse, participar y crecer — bajo la identidad de tu organización.
+        </p>
+      </article>
+
+      <article class="ms-solution-card" role="listitem">
+        <!-- Ícono: distinción / prestigio institucional -->
+        <svg class="ms-solution-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M24 6l4.5 9.1 10.1 1.5-7.3 7.1 1.7 10-9-4.7-9 4.7 1.7-10-7.3-7.1 10.1-1.5z"/>
+          <line x1="24" y1="34" x2="24" y2="44"/>
+          <line x1="17" y1="44" x2="31" y2="44"/>
+        </svg>
+        <h3 class="ms-solution-card__title">
+          La imagen institucional que tu sociedad merece
+        </h3>
+        <p class="ms-solution-card__body">
+          Tu sociedad opera y se ve a la altura de su reputación académica. MedicalSpot cuida el prestigio que construiste.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── S-04 Video ─────────────────────────────────────────────── -->
+<section
+  class="ms-video-section"
+  id="video"
+  aria-labelledby="video-heading"
+>
+  <div class="ms-video-section__inner">
+    <h2 class="ms-section-heading" id="video-heading">
+      Mira cómo funciona MedicalSpot en menos de 3 minutos.
+    </h2>
+
+    <div class="ms-video-wrapper" id="video-wrapper">
+      <iframe
+        id="ms-video-iframe"
+        src="https://www.youtube.com/embed/_1DDJodzvSE?rel=0&modestbranding=1"
+        title="Video de presentación de MedicalSpot"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+      <!-- Fallback: visible si el iframe no carga (ad-blocker, sin red, etc.) -->
+      <div class="ms-video-fallback" id="video-fallback" role="alert" aria-live="polite">
+        <p class="ms-video-fallback__text">
+          El video no está disponible en este momento.
+        </p>
+        <a
+          href="https://youtu.be/_1DDJodzvSE"
+          class="ms-video-fallback__link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Puedes verlo directamente en YouTube →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JS: detección de fallo de carga del iframe de video -->
+<script>
+  (function() {
+    var iframe = document.getElementById('ms-video-iframe');
+    var fallback = document.getElementById('video-fallback');
+    if (!iframe || !fallback) return;
+
+    var loaded = false;
+    iframe.addEventListener('load', function() { loaded = true; });
+
+    var timeout = setTimeout(function() {
+      if (!loaded) {
+        iframe.style.display = 'none';
+        fallback.classList.add('is-visible');
+      }
+    }, 8000);
+
+    iframe.addEventListener('load', function() {
+      clearTimeout(timeout);
+    });
+  })();
+</script>
